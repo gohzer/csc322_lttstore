@@ -1,0 +1,33 @@
+
+.container {
+  background-image: linear-gradient(135deg, #1e3c72 0%, #4e72b8 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
+  min-height: 100vh;
+  box-sizing: border-box;
+ 
+}
+  
+  .card {
+    /* From https://css.glass */
+    background: rgba(255, 255, 255, 0.14);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4.9px);
+    -webkit-backdrop-filter: blur(4.9px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    width: 300px;
+
+    padding: 1rem;
+    border: 1px solid #ccc;
+    /* border-radius: 5px; */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card h2 {
+    margin: 0 0 1rem;
+    font-size: 1.5rem;
+  }
