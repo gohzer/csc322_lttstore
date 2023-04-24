@@ -1,0 +1,21 @@
+.navbar {
+    height: 4rem;
+    background-color: blueviolet;
+    color: white;
+}
+
+.navbarAlign {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.navbarItemNotHome {
+    display: flex;
+    flex-direction: row;
+}
+
+.navbarItem {
+    font-size: 1.5rem;
+    padding: 1rem;
+}
