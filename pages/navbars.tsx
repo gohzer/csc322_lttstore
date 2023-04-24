@@ -13,7 +13,7 @@ export default function Navbar() {
     let authState = 0; // this is temporary!
     if(authState == 0) { // not authenticated
         // this is a little hacky, but it works
-        var componentList = NavbarLinks.filter(p => p.name != "Profile");
+        var componentList = NavbarLinks.filter(p => p.name == "Log In");
     } else { // authenticated as normal user
         var componentList = NavbarLinks.filter(p => p.name != "Log In");
     }
@@ -50,8 +50,8 @@ class NavbarLink {
 }
 
 export const NavbarLinks = [
-    new NavbarLink("Log In", "/login"),
     new NavbarLink("Cart", "/cart"),
+    new NavbarLink("Log In", "/login"),
     new NavbarLink("Profile", "/profile"),
 ]
 
