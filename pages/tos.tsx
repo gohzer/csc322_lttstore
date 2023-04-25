@@ -1,7 +1,7 @@
 import React from "react";
 import Footer from './footer'
 import Head from 'next/head';
-
+import Navbar from "./navbars";
 export default function TOS()
 {
     return (
@@ -10,6 +10,7 @@ export default function TOS()
                 <title>Terms | MacroCenter</title>
             </Head>
 
+            <Navbar/>
             <main>
                 <div className="tos-container">
                     <h1>Terms of Service</h1>

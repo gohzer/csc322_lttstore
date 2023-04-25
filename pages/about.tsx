@@ -1,6 +1,7 @@
 import React from "react";
 import Footer from './footer'
 import Head from 'next/head';
+import Navbar from "./navbars";
 
 export default function About()
 {
@@ -10,6 +11,7 @@ export default function About()
                 <title>About | MacroCenter</title>
             </Head>
 
+            <Navbar/>
             <main>
             <div className="about-content">
                 <h1>About MacroCenter</h1>

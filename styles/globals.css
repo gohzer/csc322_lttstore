@@ -84,10 +84,11 @@ body {
 
 /* footer */
 footer {
-
+  
   position: absolute;
+  left: 0;
   bottom: 0;
-  height: 50px;
+  height: 100px;
   width: 100%;
   background: #1E1E1E;
   text-align: center;

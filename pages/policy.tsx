@@ -1,6 +1,7 @@
 import React from "react";
 import Footer from './footer'
 import Head from 'next/head';
+import Navbar from "./navbars";
 
 export default function Policy()
 {
@@ -10,6 +11,7 @@ export default function Policy()
                 <title>Policy | MacroCenter</title>
             </Head>
 
+            <Navbar/>
             <main>
                 <div className="policy-container"> 
                     <h1>Privacy Policy</h1>

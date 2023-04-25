@@ -1,7 +1,7 @@
 import React from "react";
 import Footer from './footer'
 import Head from 'next/head';
-
+import Navbar from "./navbars";
 export default function Contact()
 {
     return (
@@ -10,6 +10,8 @@ export default function Contact()
                 <title>Contact | MacroCenter</title>
             </Head>
 
+            <Navbar/>
+            
             <main>
                 <div className="contact-container">
                     <h1>Contact Us</h1>

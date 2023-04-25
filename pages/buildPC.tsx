@@ -3,12 +3,18 @@ import styles from '@/styles/Home.module.css'
 import RTX2080 from '../public/RTX2080.jpg'
 import motherboard from '../public/motherboard.jpg'
 import i9 from '../public/I9Core.jpg'
-import Link from 'next/link'
+// import Link from 'next/link'
+import Navbar from './navbars'
+import Head from 'next/head'
+import Footer from './footer'
 
 export default function BuildPC() {
     return (
     <>
-        
+        <Head>
+          <title>Build | MacroCenter</title>
+        </Head>
+        <Navbar/>
         <h1>
         &nbsp;Welcome to the Macrocenter!&nbsp;
           Build your PC here.
@@ -42,6 +48,7 @@ export default function BuildPC() {
             />
             </ul>
         </body>
+        <Footer/>
 
     </>
     )
