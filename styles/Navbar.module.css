@@ -2,6 +2,9 @@
     height: 4rem;
     background-color: blueviolet;
     color: white;
+    position: fixed;
+    top: 0;
+    width:100%;
 }
 
 .navbarAlign {
@@ -18,4 +21,8 @@
 .navbarItem {
     font-size: 1.5rem;
     padding: 1rem;
+}
+
+.navbarSpacer {
+    height: 4rem;
 }
