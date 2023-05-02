@@ -8,14 +8,16 @@ TODO: work on the navbar, authentication, user account types, permissions, role 
 - role dependent views: rely on conditional components
 */
 import styles from '@/styles/Navbar.module.css'
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebase/config"
 
 export default function Navbar() {
-    let authState = 0; // this is temporary!
-    if(authState == 0) { // not authenticated
+
+    if(!auth.currentUser) { // not authenticated
         // this is a little hacky, but it works
-        var componentList = NavbarLinks.filter(p => p.name == "Log In");
+        var componentList = NavbarLinks.filter(p => p.name == "Sign In");
     } else { // authenticated as normal user
-        var componentList = NavbarLinks.filter(p => p.name != "Log In");
+        var componentList = NavbarLinks.filter(p => p.name != "Sign In");
     }
     return(
     <div>
@@ -51,7 +53,7 @@ class NavbarLink {
 
 export const NavbarLinks = [
     new NavbarLink("Cart", "/cart"),
-    new NavbarLink("Log In", "/login"),
+    new NavbarLink("Sign In", "/signin"),
     new NavbarLink("Profile", "/profile"),
 ]
 
