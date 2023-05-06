@@ -10,24 +10,29 @@ TODO: work on the navbar, authentication, user account types, permissions, role 
 import styles from '@/styles/Navbar.module.css'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase/config"
+import { useEffect, useState } from 'react';
 
 export default function Navbar() {
-
-    if(!auth.currentUser) { // not authenticated
-        // this is a little hacky, but it works
-        var componentList = NavbarLinks.filter(p => p.name == "Sign In");
-    } else { // authenticated as normal user
-        var componentList = NavbarLinks.filter(p => p.name != "Sign In");
-    }
+    const [componentList, setComponentList] = useState<NavbarLink[]>([]);
+    useEffect(() => {
+            // this is a little hacky, but it works
+        var list = NavbarLinks.filter(p => p.name == "Sign In");
+        setComponentList(list);
+        auth.onAuthStateChanged(() => {
+            var list = NavbarLinks.filter(p => p.name != "Sign In");
+            setComponentList(list);
+        })
+    }, []);
+    
     return(
     <div>
         <NavbarSpacer></NavbarSpacer>
         <div className={styles.navbar}>
             <ul className={styles.navbarAlign}>
-                <NavbarItem name="MacroCenter" path="/"/>
+                <NavbarItem key="home" name="MacroCenter" path="/"/>
                 <div className={styles.navbarItemNotHome}>
                     {componentList &&
-                     componentList.map(p => <NavbarItem name={p.name} path={p.path}/>)}
+                     componentList.map(p => <NavbarItem name={p.name} path={p.path} key={p.name}/>)}
                 </div>
             </ul>
         </div>
@@ -35,9 +40,9 @@ export default function Navbar() {
     )
 }
 
-export function NavbarItem(navLink: NavbarLink) {
+export function NavbarItem(navLink: NavbarLink, key: string) {
     return(
-        <div className={styles.navbarItem}><a href={navLink.path}>{navLink.name}</a></div>
+        <li key={key} className={styles.navbarItem}><a href={navLink.path}>{navLink.name}</a></li>
     )
 }
 

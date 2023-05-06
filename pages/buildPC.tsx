@@ -20,7 +20,7 @@ export default function BuildPC() {
           Build your PC here.
         </h1>
         
-        <body>
+        <div>
             <h1>&nbsp;Please choose your component:&nbsp;</h1>
             <ul>
                 <li>
@@ -47,7 +47,7 @@ export default function BuildPC() {
                height={175}
             />
             </ul>
-        </body>
+        </div>
         <Footer/>
 
     </>

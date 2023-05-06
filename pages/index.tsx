@@ -10,21 +10,20 @@ import { auth } from "../firebase/config"
 
 
 export default function Home() {
-  if(!auth.currentUser) console.log("not auth");
   return (
     <>
       <Head>
           <title>MacroCenter</title>
       </Head>
-      <main>
+      <div>
         <Navbar />
         <div className='start_build_div'>
-          <p id ="build_Machine_p">Build Your Own <br/> Machine</p>
+          <p id ="build_Machine_p">Build Your Own Machine</p>
           <button id = "start_build_btn">
             <a href='/buildPC'>Start Build</a>
           </button>
         </div>
-      </main>
+      </div>
       <ComputerCards/>
     <Footer/>
     </>
