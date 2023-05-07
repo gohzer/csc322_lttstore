@@ -1,20 +1,23 @@
 import { async } from "@firebase/util";
 import { auth, database } from "../firebase/config.js"
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, setPersistence, browserSessionPersistence  } from "firebase/auth";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword  } from "firebase/auth";
+import { addUserToPending } from "../utils/database"
 
 // If email & password is acceptable creates a new user
 // Inputs: String Email & Password | Outputs: Boolean Success
-const signUp = async (email, password) => {
-    return createUserWithEmailAndPassword(auth, email, password)
+async function signUp(email, password) {
+    addUserToPending(email);
+    createUserWithEmailAndPassword(auth, email, password)
     .then(() => {
-      // add the user to the database
-      
+      // add the user to the pending approval database
     })
     .catch((error) => {
       // Handle Errors here.
       const errorCode = error.code;
       const errorMessage = error.message;
+      return false;
     });
+    return true;
 }
 
 // Authenticates email & password and signIns in user

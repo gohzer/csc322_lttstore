@@ -14,7 +14,9 @@ export default function SignUp() {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // User login authentication
-    signUp(email, password)
+    if(await signUp(email, password)) {
+      router.push("/");
+    }
   }
   return(
     <div>

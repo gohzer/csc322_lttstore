@@ -1,9 +1,10 @@
 import { useState } from "react";
 import Navbar from "./navbars";
 import { app, auth } from "@/firebase/config";
-import { profile } from "console";
+import { useRouter } from "next/router";
 
 export default function Profile() {
+    const router = useRouter();
     const [profileDetails, setProfileDetails] = useState<ProfileDetails>(
         new ProfileDetails("", "", false, 0)
         );
@@ -18,9 +19,19 @@ export default function Profile() {
         }
             
     });
+
+    function signOut() {
+        auth.signOut()
+        .then(() => {
+            router.push("/");
+        })
+        .catch(e => console.error(e));
+    }
+
     return (
         <div>
             <Navbar />
+            <button onClick={signOut}>Sign Out</button>
             <ProfileItem email={profileDetails.email} 
                 account_type={profileDetails.account_type} 
                 approval={profileDetails.approval} 

@@ -8,10 +8,10 @@ TODO: work on the navbar, authentication, user account types, permissions, role 
 - role dependent views: rely on conditional components
 */
 import styles from '@/styles/Navbar.module.css'
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase/config"
 import { useEffect, useState } from 'react';
 
+/* TODO: If username in employees, add a tab called employee-hub */
 export default function Navbar() {
     const [componentList, setComponentList] = useState<NavbarLink[]>([]);
     useEffect(() => {
