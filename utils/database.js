@@ -1,8 +1,8 @@
 import { auth, database } from "../firebase/config.js"
 import { collection, doc, setDoc, getDoc, getDocs, addDoc } from "firebase/firestore";
 
-async function getAllComputerParts() {
-    let partsCollection = collection(database, "computer_parts/");
+async function queryCollection(path) {
+    let partsCollection = collection(database, path);
     let parts = await getDocs(partsCollection);
     let ret = [];
     parts.forEach((doc) => {
@@ -11,11 +11,20 @@ async function getAllComputerParts() {
     return ret;
 }
 
-async function addUserToPending(email) {
+export async function getAllComputerParts() {
+    return queryCollection("computer_parts/")
+}
+
+export async function addUserToPending(email) {
     await addDoc(collection(database, 'pendingApproval'), {"email": email});
 }
 
-export {
-    getAllComputerParts,
-    addUserToPending
-};
+
+export async function getEmployeeSet() {
+    let ret = await queryCollection("employees/");
+    let emailSet = new Set();
+    ret.forEach(item => {
+        emailSet.add(item.employee_email);
+    });
+    return emailSet;
+}

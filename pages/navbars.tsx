@@ -10,10 +10,21 @@ TODO: work on the navbar, authentication, user account types, permissions, role 
 import styles from '@/styles/Navbar.module.css'
 import { auth } from "../firebase/config"
 import { useEffect, useState } from 'react';
+import { getEmployeeSet } from "../utils/database";
 
 /* TODO: If username in employees, add a tab called employee-hub */
 export default function Navbar() {
     const [componentList, setComponentList] = useState<NavbarLink[]>([]);
+    const [reload, setReload] = useState<boolean>(false);
+    async function checkEmployee() {
+        let employees = await getEmployeeSet();
+        if(employees.has(auth.currentUser?.email)) {
+            let link = new NavbarLink("Employee Hub", "/employee");
+            componentList.push(link);
+            setComponentList(componentList);
+            setReload(true);
+        }
+    } 
     useEffect(() => {
             // this is a little hacky, but it works
         var list = NavbarLinks.filter(p => p.name == "Sign In");
@@ -22,9 +33,10 @@ export default function Navbar() {
             if(auth.currentUser) {
                 var list = NavbarLinks.filter(p => p.name != "Sign In");
                 setComponentList(list);
+                if(!reload) checkEmployee();
             }
         });
-    }, []);
+    }, [reload]);
     
     return(
     <div>
