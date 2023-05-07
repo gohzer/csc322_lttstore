@@ -143,16 +143,19 @@ footer {
   font-style: normal;
   font-size: clamp(10px, 4vw, 48px);
   color: #000000;
+  padding-top: 2rem;
 }
 
 #start_build_btn{
   font-family: 'Lao Sans Pro';
   font-style: normal;
   font-size: clamp(12px, 2vw, 32px);
-  color: #000000;
+  color: white;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
-  background-color: #E0DFF1;
+  background-color: blueviolet;
   border-radius: 5px;
+  margin-top: 1rem;
+  padding: 1rem;
 }
 
 /* about page */

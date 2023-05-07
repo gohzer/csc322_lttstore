@@ -21,7 +21,7 @@ export default function Navbar() {
         auth.onAuthStateChanged(() => {
             var list = NavbarLinks.filter(p => p.name != "Sign In");
             setComponentList(list);
-        })
+        });
     }, []);
     
     return(
