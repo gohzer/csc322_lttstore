@@ -1,17 +1,15 @@
 import { async } from "@firebase/util";
-import { auth } from "../firebase/config.js"
+import { auth, database } from "../firebase/config.js"
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, setPersistence, browserSessionPersistence  } from "firebase/auth";
 
 // If email & password is acceptable creates a new user
 // Inputs: String Email & Password | Outputs: Boolean Success
 const signUp = async (email, password) => {
-  // Auth creates new user
-    // Existing and future Auth states are now persisted in the current
-    // session only. Closing the window would clear any existing state even
-    // if a user forgets to sign out.
-    // ...
-    // New sign-in will be persisted with session persistence.
     return createUserWithEmailAndPassword(auth, email, password)
+    .then(() => {
+      // add the user to the database
+      
+    })
     .catch((error) => {
       // Handle Errors here.
       const errorCode = error.code;

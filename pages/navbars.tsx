@@ -19,8 +19,10 @@ export default function Navbar() {
         var list = NavbarLinks.filter(p => p.name == "Sign In");
         setComponentList(list);
         auth.onAuthStateChanged(() => {
-            var list = NavbarLinks.filter(p => p.name != "Sign In");
-            setComponentList(list);
+            if(auth.currentUser) {
+                var list = NavbarLinks.filter(p => p.name != "Sign In");
+                setComponentList(list);
+            }
         });
     }, []);
     

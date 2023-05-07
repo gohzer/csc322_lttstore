@@ -7,7 +7,7 @@ import Navbar from './navbars';
 import ComputerCards from './computerCards';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase/config"
-
+import { getAllComputerParts } from "../utils/database"
 
 export default function Home() {
   return (
