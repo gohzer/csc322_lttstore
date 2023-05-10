@@ -12,7 +12,7 @@ async function queryCollection(path) {
 }
 
 export async function getAllComputerParts() {
-    return queryCollection("computer_parts/")
+    return await queryCollection("computer_parts/")
 }
 
 export async function addUserToPending(email) {
