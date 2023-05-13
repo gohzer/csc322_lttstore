@@ -1,30 +1,53 @@
-import react from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from '../styles/ComputerCards.module.css';
 import Link from 'next/link';
+import { getAllComputerParts } from '@/utils/database';
 
-
-type CardProps = {
-
-    title: string;
-    specs: string[];
-    price: string;
-
-
+const defaultPart: Part = {
+  name: 'Unknown',
+  cost: 0,
+  image: '',
+  type: '',
 };
 
-const ComputerCard: React.FC<CardProps> = ({ title, specs, price }) => {
-  const specsQueryParam = encodeURIComponent(JSON.stringify(specs));
+
+type Part = {
+  name: string;
+  cost: number;
+  image: string;
+  type: string;
+};
+
+type suggestedBuild = {
+  title: string;
+  CPU: Part;
+  Motherboard: Part;
+  Memory: Part;
+  Storage: Part;
+  Video_Card: Part;
+  Case: Part;
+  Power_Supply: Part;
+  price: string;
+};
+
+
+const ComputerCard: React.FC<suggestedBuild> = (build) => {
+  const buildQueryParam = encodeURIComponent(JSON.stringify(build));
 
   return (
-    <Link href={`/addToCart?type=${encodeURIComponent(title)}&specs=${specsQueryParam}&price=${price}`} passHref>
+    <Link href={`/addToCart?build=${buildQueryParam}`} passHref>
       <div className={styles.card} role="link" tabIndex={0}>
-        <h2>{title}</h2>
+        <h2>{build.title}</h2>
         <ul>
-          {specs.map((spec, index) => (
-            <li key={index}>{spec}</li>
-          ))}
+          <li>{build.CPU.name} ({build.CPU.type}): {build.CPU.cost}</li>
+          <li>{build.Motherboard.name} ({build.Motherboard.type}): {build.Motherboard.cost}</li>
+          <li>{build.Memory.name} ({build.Memory.type}): {build.Memory.cost}</li>
+          <li>{build.Storage.name} ({build.Storage.type}): {build.Storage.cost}</li>
+          <li>{build.Video_Card.name} ({build.Video_Card.type}): {build.Video_Card.cost}</li>
+          <li>{build.Case.name} ({build.Case.type}): {build.Case.cost}</li>
+          <li>{build.Power_Supply.name} ({build.Power_Supply.type}): {build.Power_Supply.cost}</li>
         </ul>
-        <p>Price: {price}</p>
+        <p>Price: {build.price}</p>
       </div>
     </Link>
   );
@@ -32,31 +55,66 @@ const ComputerCard: React.FC<CardProps> = ({ title, specs, price }) => {
 
 
 const Computers = () => {
-    const gamingPC = {
-      title: 'Gaming PC',
-      specs: ['Processor: Intel Core i9', 'RAM: 32GB', 'Storage: 1TB SSD'],
-      price: '$2000',
-    };
+  const [allParts, setAllParts] = useState<Part[]>([]);
   
-    const personalPC = {
-      title: 'Personal PC',
-      specs: ['Processor: Intel Core i5', 'RAM: 16GB', 'Storage: 512GB SSD'],
-      price: '$1000',
-    };
-  
-    const businessPC = {
-      title: 'Business PC',
-      specs: ['Processor: Intel Core i7', 'RAM: 16GB', 'Storage: 1TB SSD'],
-      price: '$1500',
-    };
-  
-    return (
-      <div className={styles.container}>
-        <ComputerCard {...gamingPC} />
-        <ComputerCard {...personalPC} />
-        <ComputerCard {...businessPC} />
-      </div>
-    );
+  useEffect(() => {
+    let partsPromise = getAllComputerParts();
+
+    partsPromise.then(result => {
+      setAllParts(result);
+    });
+  }, []);
+
+  // Here we select specific parts for each PC. 
+  const gamingPC = {
+    title: 'Gaming PC',
+    CPU: allParts.find(part => part.name === 'AMD Ryzen 5') || defaultPart,
+    Motherboard: allParts.find(part => part.name === 'ASUS ROG Strix B550-F') || defaultPart,
+    Memory: allParts.find(part => part.name === 'Crucial Ballistix 32GB') || defaultPart,
+    Storage: allParts.find(part => part.name === 'Samsung 980 evo 512GB') || defaultPart,
+    Video_Card: allParts.find(part => part.name === 'Nvidia RTX 3070') || defaultPart,
+    Case: allParts.find(part => part.name === 'AMD Ryzen 5') || defaultPart,
+    Power_Supply: allParts.find(part => part.name === 'AMD Ryzen 5') || defaultPart,
+    price: '$2000',
   };
-  
-  export default Computers;
+
+  const personalPC = {
+    title: 'Personal PC',
+    CPU: allParts.find(part => part.name === 'AMD Ryzen 5') || defaultPart,
+    Motherboard: allParts.find(part => part.name === 'ASUS ROG Strix B550-F') || defaultPart,
+    Memory: allParts.find(part => part.name === 'Crucial Ballistix 32GB') || defaultPart,
+    Storage: allParts.find(part => part.name === 'Samsung 980 evo 512GB') || defaultPart,
+    Video_Card: allParts.find(part => part.name === 'Nvidia RTX 3070') || defaultPart,
+    Case: allParts.find(part => part.name === 'AMD Ryzen 5') || defaultPart,
+    Power_Supply: allParts.find(part => part.name === 'AMD Ryzen 5') || defaultPart,
+    price: '$2000',
+  };
+
+  const businessPC = {
+    title: 'Business PC',
+    CPU: allParts.find(part => part.name === 'AMD Ryzen 5') || defaultPart,
+    Motherboard: allParts.find(part => part.name === 'ASUS ROG Strix B550-F') || defaultPart,
+    Memory: allParts.find(part => part.name === 'Crucial Ballistix 32GB') || defaultPart,
+    Storage: allParts.find(part => part.name === 'Samsung 980 evo 512GB') || defaultPart,
+    Video_Card: allParts.find(part => part.name === 'Nvidia RTX 3070') || defaultPart,
+    Case: allParts.find(part => part.name === 'AMD Ryzen 5') || defaultPart,
+    Power_Supply: allParts.find(part => part.name === 'AMD Ryzen 5') || defaultPart,
+    price: '$2000',
+  };
+
+  return (
+    <div className={styles.container}>
+      {allParts.length > 0 ? (
+        <>
+          <ComputerCard {...gamingPC} />
+          <ComputerCard {...personalPC} />
+          <ComputerCard {...businessPC} />
+        </>
+      ) : (
+        <p>Loading...</p>
+      )}
+    </div>
+  );
+};
+
+export default Computers;
