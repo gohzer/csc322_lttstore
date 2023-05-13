@@ -11,6 +11,7 @@ import styles from '@/styles/Navbar.module.css'
 import { auth } from "../firebase/config"
 import { useEffect, useState } from 'react';
 import { getEmployeeSet } from "../utils/database";
+import Link from 'next/link';
 
 /* TODO: If username in employees, add a tab called employee-hub */
 export default function Navbar() {
@@ -50,6 +51,11 @@ export default function Navbar() {
                     {componentList &&
                      componentList.map(p => <NavbarItem name={p.name} path={p.path} key={p.name}/>)}
                 </div>
+                <Link href="/viewCartPage">
+              <button className={styles.viewCartButton}>
+                  View Cart
+              </button>
+            </Link>
             </ul>
         </div>
     </div>
