@@ -31,9 +31,11 @@ export default function Navbar() {
         setComponentList(list);
         auth.onAuthStateChanged(() => {
             if(auth.currentUser) {
-                var list = NavbarLinks.filter(p => p.name != "Sign In");
-                setComponentList(list);
                 if(!reload) checkEmployee();
+                if(reload) {
+                    var list = NavbarLinks.filter(p => p.name != "Sign In");
+                    setComponentList(list);
+                }
             }
         });
     }, [reload]);

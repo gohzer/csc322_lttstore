@@ -1,5 +1,5 @@
 import { auth, database } from "../firebase/config.js"
-import { collection, doc, setDoc, getDoc, getDocs, addDoc } from "firebase/firestore";
+import { collection, deleteDoc, doc, setDoc, getDoc, getDocs, addDoc } from "firebase/firestore";
 
 async function queryCollection(path) {
     let partsCollection = collection(database, path);
@@ -27,4 +27,28 @@ export async function getEmployeeSet() {
         emailSet.add(item.employee_email);
     });
     return emailSet;
+}
+
+export async function getNonApprovedUsers() {
+    let ret = await queryCollection("pendingApproval/")
+    return ret;
+}
+
+export async function approveUserFirebase(email) {
+    let collec = collection(database, "pendingApproval")
+    let users = await getDocs(collec);
+    let docList = [];
+    users.forEach(u => {
+        if(u.data().email == email) {
+            let id = u._document.key.path.segments[6];
+            docList.push(id);
+        }
+    });
+    let id = docList[0];
+    await deleteDoc(doc(database, "pendingApproval", id));
+    console.log("removed")
+}
+
+function getIdFromDoc(docum) {
+    return u._document.key.path.segments[6];
 }
