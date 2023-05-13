@@ -51,11 +51,6 @@ export default function Navbar() {
                     {componentList &&
                      componentList.map(p => <NavbarItem name={p.name} path={p.path} key={p.name}/>)}
                 </div>
-                <Link href="/viewCartPage">
-              <button className={styles.viewCartButton}>
-                  View Cart
-              </button>
-            </Link>
             </ul>
         </div>
     </div>
@@ -79,7 +74,7 @@ class NavbarLink {
 }
 
 export const NavbarLinks = [
-    new NavbarLink("Cart", "/cart"),
+    new NavbarLink("Cart", "/viewCartPage"),
     new NavbarLink("Sign In", "/signin"),
     new NavbarLink("Profile", "/profile"),
 ]

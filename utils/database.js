@@ -49,6 +49,17 @@ export async function approveUserFirebase(email) {
     console.log("removed")
 }
 
-function getIdFromDoc(docum) {
+export function getIdFromDoc(docum) {
     return u._document.key.path.segments[6];
+}
+
+export async function addComputer(cpuId, moboId, ramId, gpuId, caseId, psuId) {
+    await addDoc(collection(database, 'computers'), {
+        "cpu": cpuId,
+        "mobo": moboId,
+        "ram": ramId,
+        "gpu": gpuId,
+        "case": caseId,
+        "psu": psuId,
+    });
 }
