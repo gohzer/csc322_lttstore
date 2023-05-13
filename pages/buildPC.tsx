@@ -58,15 +58,27 @@ const getParts = () => {
             <div className={styles.grid}>
                 <div className={styles.gridItem}>
                     <h2>CPU</h2>
-                    <button className={styles.customizeButton} onClick={() => router.push('/customizeOptionPage?component=CPU')}>Customize</button>
+                    <button className={styles.customizeButton} onClick={() => router.push('/customizeOptionPage?component=cpu')}>Customize</button>
+                </div>
+                <div className={styles.gridItem}>
+                    <h2>RAM</h2>
+                    <button className={styles.customizeButton} onClick={() => router.push('/customizeOptionPage?component=ram')}>Customize</button>
                 </div>
                 <div className={styles.gridItem}>
                     <h2>Motherboard</h2>
-                    <button className={styles.customizeButton} onClick={() => router.push('/customizeOptionPage?component=Motherboard')}>Customize</button>
+                    <button className={styles.customizeButton} onClick={() => router.push('/customizeOptionPage?component=mobo')}>Customize</button>
                 </div>
                 <div className={styles.gridItem}>
                     <h2>Graphics Card</h2>
-                    <button className={styles.customizeButton} onClick={() => router.push('/customizeOptionPage?component=GraphicsCard')}>Customize</button>
+                    <button className={styles.customizeButton} onClick={() => router.push('/customizeOptionPage?component=gpu')}>Customize</button>
+                </div>
+                <div className={styles.gridItem}>
+                    <h2>Case</h2>
+                    <button className={styles.customizeButton} onClick={() => router.push('/customizeOptionPage?component=case')}>Customize</button>
+                </div>
+                <div className={styles.gridItem}>
+                    <h2>PSU</h2>
+                    <button className={styles.customizeButton} onClick={() => router.push('/customizeOptionPage?component=psu')}>Customize</button>
                 </div>
             </div>
         </div>
