@@ -2,6 +2,7 @@ import React from "react";
 import Footer from './footer'
 import Head from 'next/head';
 import Navbar from "./navbars";
+import styles from '@/styles/About.module.css';
 
 export default function About()
 {
@@ -13,7 +14,7 @@ export default function About()
 
             <Navbar/>
             <main>
-            <div className="about-content">
+            <div className={styles.container}>
                 <h1>About MacroCenter</h1>
                 <p>
                     Founded in 2023, MacroCenter is a leading retailer of computer hardware, software, and accessories in the United States. Our mission is to provide our customers with the best selection of high-quality computer products at competitive prices, while delivering exceptional customer service and technical support.

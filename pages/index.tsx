@@ -15,16 +15,23 @@ export default function Home() {
       <Head>
           <title>MacroCenter</title>
       </Head>
+
+       
       <div>
-        <Navbar />
-        <div className='start_build_div'>
-          <p id ="build_Machine_p">Build Your Own Machine</p>
-          <button id = "start_build_btn">
+      <Navbar /> 
+        <div className={styles.start_build_div}>
+          <p className={styles.build_Machine_p}>Build Your Own Machine</p>
+          <button className={styles.start_build_btn}>
             <a href='/buildPC'>Start Build</a>
           </button>
+          
+        </div>
+
+        <div className={styles.cards}>
+          <ComputerCards />
         </div>
       </div>
-      <ComputerCards/>
+      
     <Footer/>
     </>
   )

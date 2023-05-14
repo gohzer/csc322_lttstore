@@ -1,18 +1,17 @@
 import React from "react";
+import styles from '@/styles/Footer.module.css';
 
 export default function Footer()
 {
     return (
         <React.Fragment>
-            <footer >
-                <div className='footer_div'>
-                    <a id = "footer_a" href="/about">About Us</a>
-                    <a id = "footer_a" href="/contact">Contact</a>
-                    <a id = "footer_a" href="/tos">Terms of Service</a>
-                    <a id = "footer_a1" href="/policy">Policy</a>
-                </div>
+            <footer className = {styles.container}>
+                <a href="/about">About Us</a>
+                <a href="/contact">Contact</a>
+                <a href="/tos">Terms of Service</a>
+                <a href="/policy">Policy</a>
                
-                <a id = "footer_a2" href="/">&copy; MacroCenter</a>
+                <a className= {styles.a2} href="/">&copy; MacroCenter</a>
             </footer>
         </React.Fragment>
     );

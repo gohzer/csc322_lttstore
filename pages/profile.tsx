@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Navbar from "./navbars";
+import Footer from "./footer";
 import { app, auth } from "@/firebase/config";
 import { useRouter } from "next/router";
 
@@ -36,6 +37,7 @@ export default function Profile() {
                 account_type={profileDetails.account_type} 
                 approval={profileDetails.approval} 
                 balance={profileDetails.balance} />
+            <Footer/>
         </div>
     )
 }

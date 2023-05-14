@@ -2,6 +2,7 @@ import React from "react";
 import Footer from './footer'
 import Head from 'next/head';
 import Navbar from "./navbars";
+import styles from '@/styles/tos.module.css';
 export default function TOS()
 {
     return (
@@ -12,7 +13,7 @@ export default function TOS()
 
             <Navbar/>
             <main>
-                <div className="tos-container">
+                <div className={styles.container}>
                     <h1>Terms of Service</h1>
                     <p>Please read these terms of service ("terms", "terms of service") carefully before using macrocenter.com website (the "service") operated by MacroCenter ("us", 'we", "our").</p>
 

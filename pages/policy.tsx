@@ -2,6 +2,7 @@ import React from "react";
 import Footer from './footer'
 import Head from 'next/head';
 import Navbar from "./navbars";
+import styles from '@/styles/policy.module.css';
 
 export default function Policy()
 {
@@ -13,7 +14,7 @@ export default function Policy()
 
             <Navbar/>
             <main>
-                <div className="policy-container"> 
+                <div className={styles.container}> 
                     <h1>Privacy Policy</h1>
                     <p>
                     At MacroCenter, we take your privacy very seriously. This policy

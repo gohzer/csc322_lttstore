@@ -4,6 +4,8 @@
 
 import { useEffect, useState } from "react";
 import Navbar from "./navbars";
+import Footer from "./footer";
+import styles from '@/styles/Employee.module.css';
 import { approveUserFirebase, getNonApprovedUsers } from "@/utils/database";
 
 export default function EmployeeHub() {
@@ -16,10 +18,14 @@ export default function EmployeeHub() {
             window.location.reload();
         }
         return (
-            <div>
-                <p>{props.email}</p>
-                <button onClick={approveUser}>Approve</button>
-            </div>
+            <>
+            <tr>
+                <td>{props.email}</td>
+                <td>
+                <button className={styles.button} onClick={approveUser}>Approve</button>
+                </td>
+            </tr>
+            </>
         )
     }
 
@@ -29,14 +35,33 @@ export default function EmployeeHub() {
         setReload(true);
     }
     useEffect(() => {
-        getUsers();
+        getUsers(); 
     }, [reload])
-    return(<div>
-        <Navbar />
-        <p>Users to approve:</p>
-        <div>
-            {userList.map(u => <UserApproval email={u.email} />)}
+    return(
+        <><Navbar />    
+        
+        <h2 className={styles.title}>Employee Hub</h2>
+        <div className={styles.container}>
+            
+            <h2>Users to Approve</h2>
+            <table className={styles.table}>
+            <thead>
+                <tr>
+                <th>Email</th>
+                <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {userList.map((u) => (
+                <UserApproval email={u.email} />
+                ))}
+            </tbody>
+            </table>
+            
         </div>
-    </div>)
+        <Footer />
+        </>
+        
+    )
 }
 

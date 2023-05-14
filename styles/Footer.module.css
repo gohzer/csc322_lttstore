@@ -1,0 +1,26 @@
+/* footer */
+.container {
+
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: auto;
+    width: 100%;
+    background: #1E1E1E;
+    text-align: center;
+    padding-top: 20px;
+}
+  
+.container a{
+    font-size: clamp(10px, 4vw, 20px);
+    color: #fff;
+    margin-right: clamp(45px, 10vw, 100px);
+    text-decoration: none;
+}
+  
+.a2{
+    font-size: clamp(10px, 4vw, 20px);
+    display: block;
+    color: #fff;
+    text-decoration: none;
+}
