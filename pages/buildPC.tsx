@@ -6,6 +6,7 @@ import Head from 'next/head';
 import Footer from './footer';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { addComputer } from '@/utils/database';
 
 interface Component {
   name: string;
@@ -13,7 +14,7 @@ interface Component {
   cost: number;
 }
 
-const defaultComponents = {
+const defaultComponents: { [key: string]: any } = {
   cpu: {} as Component,
   ram: {} as Component,
   mobo: {} as Component,
@@ -25,6 +26,7 @@ const defaultComponents = {
 
 export default function BuildPC() {
   const router = useRouter();
+  const [employee, setEmployee] = useState();
 
   const [components, setComponents] = useState<typeof defaultComponents>(() => {
     if (typeof window !== 'undefined') {
@@ -57,6 +59,26 @@ export default function BuildPC() {
     localStorage.removeItem('selectedComponents');
   };
 
+  const handleComputerSubmit = () => {
+    // check that all components are selected
+    for(const property in components) {
+      let item = components[property];
+      if(!item.hasOwnProperty('cost')) {
+        console.log("violation")
+        return
+      }
+    }
+    console.log("valid PC! adding...")
+    addComputer(
+      components.cpu.id.replaceAll(/\s/g,''),
+      components.mobo.id.replaceAll(/\s/g,''),
+      components.ram.id.replaceAll(/\s/g,''),
+      components.gpu.id.replaceAll(/\s/g,''),
+      components.case.id.replaceAll(/\s/g,''),
+      components.psu.id.replaceAll(/\s/g,'')
+    )
+  }
+
   return (
     <>
       <Head>
@@ -87,9 +109,12 @@ export default function BuildPC() {
               </button>
             </div>
           ))}
-          <div className={styles.gridItem}>
-            <button className={styles.clearButton} onClick={handleClearSelection}>
+          <div className={styles.gridItemSubmit}>
+            <button className={styles.customizeButton} onClick={handleClearSelection}>
               Clear Selection
+            </button>
+            <button className={styles.customizeButton} onClick={handleComputerSubmit}>
+              Add To Main Screen
             </button>
           </div>
         </div>

@@ -21,6 +21,17 @@
     align-items: center;
     justify-content: space-between;
   }
+
+  .gridItemSubmit {
+    justify-self: center;
+    align-self: center;
+    width: 60%;
+    background: #fff;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
   
   .customizeButton {
     border: none;
