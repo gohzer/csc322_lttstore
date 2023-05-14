@@ -19,9 +19,9 @@ export default function Home() {
        
       <div>
       <Navbar /> 
-        <div className={styles.start_build_div}>
-          <p className={styles.build_Machine_p}>Build Your Own Machine</p>
-          <button className={styles.start_build_btn}>
+        <div className={styles.startbuilddiv}>
+          <h1 className={styles.buildMachinep}>Build Your Own Machine</h1>
+          <button className={styles.startbuildbtn}>
             <a href='/buildPC'>Start Build</a>
           </button>
           

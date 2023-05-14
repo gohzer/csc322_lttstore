@@ -38,7 +38,8 @@ export default function EmployeeHub() {
         getUsers(); 
     }, [reload])
     return(
-        <><Navbar />    
+        <>
+        <Navbar />    
         
         <h2 className={styles.title}>Employee Hub</h2>
         <div className={styles.container}>
