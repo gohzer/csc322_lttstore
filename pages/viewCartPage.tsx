@@ -5,6 +5,8 @@ import Navbar from './navbars';
 import Head from 'next/head';
 import Footer from './footer';
 import { useRouter } from 'next/router';
+import { addToPurchased, getNonApprovedUserSet, getNonApprovedUsers } from '@/utils/database';
+import { auth } from "../firebase/config"
 
 interface Part {
   name: string;
@@ -49,19 +51,29 @@ const Cart = () => {
   };
 
   // Function to proceed to checkout
-  const handleCheckout = () => {
+  const handleCheckout = async () => {
     // Navigate to the checkout page (replace 'checkout' with the path of your checkout page)
     let balance = parseFloat(localStorage.getItem('balance') || '0');
     if(price > balance) {
       alert("Insufficient funds! Get your bread up or remove some items.")
     }
     else {
-      handleClearCart();
-      let newBal = (balance - price)
-      localStorage.setItem('balance', newBal.toString())
-      setBalance(newBal);
-      setPrice(0);
-      alert("Items purchased! The cost has been debited from your account.")
+      await getNonApprovedUserSet().then(nonApproved => {
+        if(auth.currentUser && nonApproved.has(auth.currentUser.email)) {
+          for(let i in cart) {
+            let item = cart[i];
+            addToPurchased(auth.currentUser.uid, item.name, item.type, item.cost);
+          }
+          handleClearCart();
+          let newBal = (balance - price)
+          localStorage.setItem('balance', newBal.toString())
+          setBalance(newBal);
+          setPrice(0);
+          alert("Items purchased! The cost has been debited from your account.")
+        }
+        else alert("you are not approved! cannot purchase items")
+      });
+      
     }
   };
 

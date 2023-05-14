@@ -34,6 +34,15 @@ export async function getNonApprovedUsers() {
     return ret;
 }
 
+export async function getNonApprovedUserSet() {
+    let ret = await queryCollection("pendingApproval/")
+    let emailSet = new Set();
+    ret.forEach(item => {
+        emailSet.add(item.employee_email);
+    });
+    return emailSet;
+}
+
 export async function approveUserFirebase(email) {
     let collec = collection(database, "pendingApproval")
     let users = await getDocs(collec);
@@ -73,4 +82,24 @@ export async function getPartById(id) {
     let partsCollection = collection(database, "computer_parts/");
     let part = await getDoc(doc(partsCollection, id));
     return part.data();
+}
+
+export async function addToPurchased(uid, name, type, cost) {
+    let collec = collection(database, 'transactions', uid, 'purchases');
+    let document = {
+        "name": name,
+        "type": type,
+        "cost": cost
+    }
+    await addDoc(collec, document)
+}
+
+export async function getPurchases(uid) {
+    let collec = collection(database, 'transactions', uid, 'purchases');
+    let parts = await getDocs(collec);
+    let ret = [];
+    parts.forEach((doc) => {
+        ret.push(doc.data());
+    });
+    return ret;
 }
