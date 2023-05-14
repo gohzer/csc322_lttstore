@@ -67,39 +67,39 @@ const Computers = () => {
 
   // Here we select specific parts for each PC. 
   const gamingPC = {
-    title: 'Gaming PC',
-    CPU: allParts.find(part => part.name === 'AMD Ryzen 5') || defaultPart,
-    Motherboard: allParts.find(part => part.name === 'ASUS ROG Strix B550-F') || defaultPart,
+    title: 'Ultimate Gaming PC',
+    CPU: allParts.find(part => part.name === 'AMD Ryzen 9') || defaultPart,
+    Motherboard: allParts.find(part => part.name.includes("B550")) || defaultPart,
     Memory: allParts.find(part => part.name === 'Crucial Ballistix 32GB') || defaultPart,
-    Storage: allParts.find(part => part.name === 'Samsung 980 evo 512GB') || defaultPart,
-    Video_Card: allParts.find(part => part.name === 'Nvidia RTX 3070') || defaultPart,
-    Case: allParts.find(part => part.name === 'AMD Ryzen 5') || defaultPart,
-    Power_Supply: allParts.find(part => part.name === 'AMD Ryzen 5') || defaultPart,
-    price: '$2000',
+    Storage: allParts.find(part => part.name === 'Samsung 980 evo 2TB') || defaultPart,
+    Video_Card: allParts.find(part => part.name === 'Nvidia RTX 3090') || defaultPart,
+    Case: allParts.find(part => part.name === 'Corsair 4000D') || defaultPart,
+    Power_Supply: allParts.find(part => part.name.includes("PSU")) || defaultPart,
+    price: "$2900",
   };
 
   const personalPC = {
     title: 'Personal PC',
-    CPU: allParts.find(part => part.name === 'AMD Ryzen 5') || defaultPart,
-    Motherboard: allParts.find(part => part.name === 'ASUS ROG Strix B550-F') || defaultPart,
-    Memory: allParts.find(part => part.name === 'Crucial Ballistix 32GB') || defaultPart,
+    CPU: allParts.find(part => part.name === 'AMD Ryzen 7') || defaultPart,
+    Motherboard: allParts.find(part => part.name.includes("B550")) || defaultPart,
+    Memory: allParts.find(part => part.name === 'Crucial Ballistix 16GB') || defaultPart,
     Storage: allParts.find(part => part.name === 'Samsung 980 evo 512GB') || defaultPart,
     Video_Card: allParts.find(part => part.name === 'Nvidia RTX 3070') || defaultPart,
-    Case: allParts.find(part => part.name === 'AMD Ryzen 5') || defaultPart,
-    Power_Supply: allParts.find(part => part.name === 'AMD Ryzen 5') || defaultPart,
-    price: '$2000',
+    Case: allParts.find(part => part.name === 'Corsair 4000D') || defaultPart,
+    Power_Supply: allParts.find(part => part.name.includes("PSU")) || defaultPart,
+    price: '$1480',
   };
 
   const businessPC = {
     title: 'Business PC',
-    CPU: allParts.find(part => part.name === 'AMD Ryzen 5') || defaultPart,
-    Motherboard: allParts.find(part => part.name === 'ASUS ROG Strix B550-F') || defaultPart,
-    Memory: allParts.find(part => part.name === 'Crucial Ballistix 32GB') || defaultPart,
-    Storage: allParts.find(part => part.name === 'Samsung 980 evo 512GB') || defaultPart,
+    CPU: allParts.find(part => part.name === 'AMD Ryzen 9') || defaultPart,
+    Motherboard: allParts.find(part => part.name.includes("B550")) || defaultPart,
+    Memory: allParts.find(part => part.name === 'Crucial Ballistix 64GB') || defaultPart,
+    Storage: allParts.find(part => part.name === 'Samsung 980 evo 2TB') || defaultPart,
     Video_Card: allParts.find(part => part.name === 'Nvidia RTX 3070') || defaultPart,
-    Case: allParts.find(part => part.name === 'AMD Ryzen 5') || defaultPart,
-    Power_Supply: allParts.find(part => part.name === 'AMD Ryzen 5') || defaultPart,
-    price: '$2000',
+    Case: allParts.find(part => part.name === 'Corsair 4000D') || defaultPart,
+    Power_Supply: allParts.find(part => part.name.includes("PSU")) || defaultPart,
+    price: '$1900',
   };
 
   return (

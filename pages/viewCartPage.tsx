@@ -15,12 +15,20 @@ interface Part {
 
 const Cart = () => {
   const [cart, setCart] = useState<Part[]>([]);
+  const [price, setPrice] = useState<number>(0);
+  const [reload, setReload] = useState(false);
   const router = useRouter();
 
   // Function to load the cart from localStorage
   const loadCart = () => {
     const savedCart = JSON.parse(localStorage.getItem('cart') ?? '[]');
     setCart(savedCart);
+    let prices = 0;
+    for(let item in cart) {
+      prices += cart[item].cost
+      setPrice(prices);
+    }
+    setReload(true);
   };
 
   // Function to handle removing an item from the cart
@@ -46,7 +54,7 @@ const Cart = () => {
   // Load cart from localStorage when component mounts
   useEffect(() => {
     loadCart();
-  }, []);
+  }, [reload]);
 
   return (
     <>
@@ -64,8 +72,12 @@ const Cart = () => {
             </li>
           ))}
         </ul>
-        <button className={`${styles.button} ${styles.clearCartButton}`} onClick={handleClearCart}>Clear Cart</button>
-        <button className={`${styles.button} ${styles.checkoutButton}`} onClick={handleCheckout}>Proceed to Checkout</button>
+        <div className={styles.cartContainer}>
+          <button className={`${styles.button} ${styles.clearCartButton}`} onClick={handleClearCart}>Clear Cart</button>
+          <button className={`${styles.button} ${styles.checkoutButton}`} onClick={handleCheckout}>Proceed to Checkout</button>
+          <p className={styles.cost}>Cost: {price}</p>
+        </div>
+        
       </div>
       <Footer/>
     </>

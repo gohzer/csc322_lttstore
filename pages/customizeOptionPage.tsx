@@ -10,23 +10,23 @@ import { getAllComputerParts } from '@/utils/database';
 const cpuComponents = {
   'Intel Core i7': {
     compatibleGPUs: ['Nvidia RTX 3070', 'Nvidia RTX 3080', 'Nvidia RTX 3090'],
-    compatibleSSDs: ['Samsung 980 evo 512GB'],
+    compatibleSSDs: ['Samsung 980 evo 512GB', 'Samsung 980 evo 2TB', 'Samsung 980 evo 1TB'],
     compatiblePSUs: ['Corsair 900W PSU'],
-    compatibleRAM: ['Crucial Ballistix 32GB', 'Crucial Ballistix 64GB'],
+    compatibleRAM: ['Crucial Ballistix 32GB', 'Crucial Ballistix 64GB', 'Crucial Ballistix 16GB'],
     compatibleMotherboards: ['MSI B550 GAMING PLUS']
   },
   'Intel Core i3': {
     compatibleGPUs: ['Nvidia RTX 3070', 'Nvidia RTX 3080', 'Nvidia RTX 3090'],
-    compatibleSSDs: ['Samsung 980 evo 512GB', 'Samsung 980 evo 2TB'],
+    compatibleSSDs: ['Samsung 980 evo 512GB', 'Samsung 980 evo 2TB', 'Samsung 980 evo 1TB'],
     compatiblePSUs: ['Corsair 900W PSU'],
-    compatibleRAM: ['Crucial Ballistix 32GB', 'Crucial Ballistix 64GB'],
-    compatibleMotherboards: ['MSI B550 GAMING PLUS', 'MSI B560M Pro']
+    compatibleRAM: ['Crucial Ballistix 32GB', 'Crucial Ballistix 64GB', 'Crucial Ballistix 16GB'],
+    compatibleMotherboards: ['MSI B560M Pro']
   },
   'Intel Core i5': {
     compatibleGPUs: ['Nvidia RTX 3070', 'Nvidia RTX 3080', 'Nvidia RTX 3090'],
-    compatibleSSDs: ['Samsung 980 evo 512GB', 'Samsung 980 evo 2TB'],
+    compatibleSSDs: ['Samsung 980 evo 512GB', 'Samsung 980 evo 2TB', 'Samsung 980 evo 1TB'],
     compatiblePSUs: ['Corsair 900W PSU'],
-    compatibleRAM: ['Crucial Ballistix 32GB', 'Crucial Ballistix 64GB'],
+    compatibleRAM: ['Crucial Ballistix 32GB', 'Crucial Ballistix 64GB', 'Crucial Ballistix 16GB'],
     compatibleMotherboards: ['MSI B560M Pro']
   },
   'Intel Core i9': {
@@ -34,27 +34,27 @@ const cpuComponents = {
     compatibleSSDs: ['Samsung 980 evo 512GB', 'Samsung 980 evo 2TB', 'Samsung 980 evo 1TB'],
     compatiblePSUs: ['Corsair 900W PSU'],
     compatibleRAM: ['Crucial Ballistix 32GB', 'Crucial Ballistix 64GB', 'Crucial Ballistix 16GB'],
-    compatibleMotherboards: ['MSI B550 GAMING PLUS', 'MSI B560M Pro']
+    compatibleMotherboards: ['MSI B560M Pro']
   },
   'AMD Ryzen 5': {
     compatibleGPUs: ['Nvidia RTX 3070', 'Nvidia RTX 3080', 'Nvidia RTX 3090'],
-    compatibleSSDs: ['Samsung 980 evo 512GB', 'Samsung 980 evo 2TB'],
+    compatibleSSDs: ['Samsung 980 evo 512GB', 'Samsung 980 evo 2TB', 'Samsung 980 evo 1TB'],
     compatiblePSUs: ['Corsair 900W PSU'],
     compatibleRAM: ['Crucial Ballistix 32GB', 'Crucial Ballistix 64GB', 'Crucial Ballistix 16GB'],
     compatibleMotherboards: ['MSI B550 GAMING PLUS']
   },
   'AMD Ryzen 7': {
     compatibleGPUs: ['Nvidia RTX 3070', 'Nvidia RTX 3080', 'Nvidia RTX 3090'],
-    compatibleSSDs: ['Samsung 980 evo 512GB', 'Samsung 980 evo 2TB'],
+    compatibleSSDs: ['Samsung 980 evo 512GB', 'Samsung 980 evo 2TB', 'Samsung 980 evo 1TB'],
     compatiblePSUs: ['Corsair 900W PSU'],
     compatibleRAM: ['Crucial Ballistix 32GB', 'Crucial Ballistix 64GB', 'Crucial Ballistix 16GB'],
     compatibleMotherboards: ['MSI B550 GAMING PLUS']
   },
   'AMD Ryzen 9': {
     compatibleGPUs: ['Nvidia RTX 3070', 'Nvidia RTX 3080', 'Nvidia RTX 3090'],
-    compatibleSSDs: ['Samsung 980 evo 512GB'],
+    compatibleSSDs: ['Samsung 980 evo 512GB', 'Samsung 980 evo 2TB', 'Samsung 980 evo 1TB'],
     compatiblePSUs: ['Corsair 900W PSU'],
-    compatibleRAM: ['Crucial Ballistix 32GB'],
+    compatibleRAM: ['Crucial Ballistix 32GB', 'Crucial Ballistix 64GB', 'Crucial Ballistix 16GB'],
     compatibleMotherboards: ['MSI B550 GAMING PLUS']
   }
 };
@@ -64,21 +64,21 @@ const cpuComponents = {
 
 const gpuComponents = {
   'Nvidia RTX 3080': {
-    compatibleCPUs: ['Intel Core i7', 'Intel Core i9'],
+    compatibleCPUs: ['Intel Core i7', 'Intel Core i3', 'Intel Core i5', 'Intel Core i9', 'AMD Ryzen 3', 'AMD Ryzen 5', 'AMD Ryzen 7', 'AMD Ryzen 9'],
     compatibleSSDs: ['Samsung 980 evo 512GB', 'Samsung 980 evo 2TB'],
     compatiblePSUs: ['Corsair 900W PSU'],
-    compatibleRAM: ['Crucial Ballistix 32GB', 'Crucial Ballistix 64GB'],
-    compatibleMotherboards: ['MSI B550 GAMING PLUS']
+    compatibleRAM: ['Crucial Ballistix 32GB', 'Crucial Ballistix 64GB', 'Crucial Ballistix 16GB'],
+    compatibleMotherboards: ['MSI B550 GAMING PLUS', 'MSI B560M Pro']
   },
   'Nvidia RTX 3070': {
-    compatibleCPUs: ['Intel Core i7', 'Intel Core i3', 'Intel Core i5', 'AMD Ryzen 5', 'AMD Ryzen 7', 'AMD Ryzen 9'],
+    compatibleCPUs: ['Intel Core i7', 'Intel Core i3', 'Intel Core i5', 'Intel Core i9', 'AMD Ryzen 3', 'AMD Ryzen 5', 'AMD Ryzen 7', 'AMD Ryzen 9'],
     compatibleSSDs: ['Samsung 980 evo 512GB', 'Samsung 980 evo 2TB'],
     compatiblePSUs: ['Corsair 900W PSU'],
     compatibleRAM: ['Crucial Ballistix 32GB', 'Crucial Ballistix 64GB', 'Crucial Ballistix 16GB'],
     compatibleMotherboards: ['MSI B550 GAMING PLUS', 'MSI B560M Pro']
   },
   'Nvidia RTX 3090': {
-    compatibleCPUs: ['Intel Core i9'],
+    compatibleCPUs: ['Intel Core i7', 'Intel Core i3', 'Intel Core i5', 'Intel Core i9', 'AMD Ryzen 3', 'AMD Ryzen 5', 'AMD Ryzen 7', 'AMD Ryzen 9'],
     compatibleSSDs: ['Samsung 980 evo 512GB', 'Samsung 980 evo 2TB', 'Samsung 980 evo 1TB'],
     compatiblePSUs: ['Corsair 900W PSU'],
     compatibleRAM: ['Crucial Ballistix 32GB', 'Crucial Ballistix 64GB', 'Crucial Ballistix 16GB'],
@@ -89,64 +89,64 @@ const gpuComponents = {
 
 const ramComponents = {
   'Crucial Ballistix 32GB': {
-    compatibleCPUs: ['Intel Core i7', 'Intel Core i3', 'Intel Core i5', 'Intel Core i9', 'AMD Ryzen 5', 'AMD Ryzen 7', 'AMD Ryzen 9'],
-    compatibleGPUs: ['Nvidia RTX 3070'],
-    compatibleSSDs: ['Samsung 980 evo 512GB', 'Samsung 980 evo 2TB'],
+    compatibleCPUs: ['Intel Core i7', 'Intel Core i3', 'Intel Core i5', 'Intel Core i9', 'AMD Ryzen 3', 'AMD Ryzen 5', 'AMD Ryzen 7', 'AMD Ryzen 9'],
+    compatibleGPUs: ['Nvidia RTX 3070', 'Nvidia RTX 3070', 'Nvidia RTX 3070'],
+    compatibleSSDs: ['Samsung 980 evo 512GB', 'Samsung 980 evo 1TB', 'Samsung 980 evo 2TB'],
     compatiblePSUs: ['Corsair 900W PSU'],
-    compatibleMotherboards: ['MSI B550 GAMING PLUS']
+    compatibleMotherboards: ['MSI B550 GAMING PLUS', 'MSI B560M Pro']
   },
   'Crucial Ballistix 64GB': {
-    compatibleCPUs: ['Intel Core i7', 'Intel Core i3', 'Intel Core i5', 'Intel Core i9', 'AMD Ryzen 5', 'AMD Ryzen 7', 'AMD Ryzen 9'],
-    compatibleGPUs: ['Nvidia RTX 3070'],
-    compatibleSSDs: ['Samsung 980 evo 512GB', 'Samsung 980 evo 2TB'],
+    compatibleCPUs: ['Intel Core i7', 'Intel Core i3', 'Intel Core i5', 'Intel Core i9', 'AMD Ryzen 3', 'AMD Ryzen 5', 'AMD Ryzen 7', 'AMD Ryzen 9'],
+    compatibleGPUs: ['Nvidia RTX 3070', 'Nvidia RTX 3080', 'Nvidia RTX 3090'],
+    compatibleSSDs: ['Samsung 980 evo 512GB', 'Samsung 980 evo 1TB', 'Samsung 980 evo 2TB'],
     compatiblePSUs: ['Corsair 900W PSU'],
-    compatibleMotherboards: ['MSI B550 GAMING PLUS']
+    compatibleMotherboards: ['MSI B550 GAMING PLUS', 'MSI B560M Pro']
   },
   'Crucial Ballistix 16GB': {
-    compatibleCPUs: ['Intel Core i5', 'Intel Core i9', 'AMD Ryzen 5', 'AMD Ryzen 7', 'AMD Ryzen 9'],
-    compatibleGPUs: ['Nvidia RTX 3070'],
-    compatibleSSDs: ['Samsung 980 evo 512GB', 'Samsung 980 evo 2TB'],
+    compatibleCPUs: ['Intel Core i7', 'Intel Core i3', 'Intel Core i5', 'Intel Core i9', 'AMD Ryzen 3', 'AMD Ryzen 5', 'AMD Ryzen 7', 'AMD Ryzen 9'],
+    compatibleGPUs: ['Nvidia RTX 3070','Nvidia RTX 3080', 'Nvidia RTX 3090'],
+    compatibleSSDs: ['Samsung 980 evo 512GB', 'Samsung 980 evo 1TB', 'Samsung 980 evo 2TB'],
     compatiblePSUs: ['Corsair 900W PSU'],
-    compatibleMotherboards: ['MSI B550 GAMING PLUS']
+    compatibleMotherboards: ['MSI B550 GAMING PLUS', 'MSI B560M Pro']
   }
 };
 
 
 const motherboardComponents = {
   'MSI B550 GAMING PLUS': {
-    compatibleCPUs: ['Intel Core i7', 'Intel Core i3', 'Intel Core i5', 'Intel Core i9', 'AMD Ryzen 5', 'AMD Ryzen 7', 'AMD Ryzen 9'],
-    compatibleGPUs: ['Nvidia RTX 3070'],
+    compatibleCPUs: ['AMD Ryzen 3', 'AMD Ryzen 5', 'AMD Ryzen 7', 'AMD Ryzen 9'],
+    compatibleGPUs: ['Nvidia RTX 3070','Nvidia RTX 3080', 'Nvidia RTX 3090'],
     compatibleSSDs: ['Samsung 980 evo 512GB', 'Samsung 980 evo 2TB'],
     compatiblePSUs: ['Corsair 900W PSU'],
     compatibleRAM: ['Crucial Ballistix 32GB', 'Crucial Ballistix 64GB', 'Crucial Ballistix 16GB']
   },
   'MSI B560M Pro': {
-    compatibleCPUs: ['Intel Core i3', 'Intel Core i5', 'Intel Core i9', 'AMD Ryzen 5', 'AMD Ryzen 7', 'AMD Ryzen 9'],
-    compatibleGPUs: ['Nvidia RTX 3070'],
+    compatibleCPUs: ['Intel Core i3', 'Intel Core i5', 'Intel Core i7', 'Intel Core i9'],
+    compatibleGPUs: ['Nvidia RTX 3070','Nvidia RTX 3080', 'Nvidia RTX 3090'],
     compatibleSSDs: ['Samsung 980 evo 512GB', 'Samsung 980 evo 2TB'],
     compatiblePSUs: ['Corsair 900W PSU'],
-    compatibleRAM: ['Crucial Ballistix 32GB', 'Crucial Ballistix 64GB']
+    compatibleRAM: ['Crucial Ballistix 32GB', 'Crucial Ballistix 64GB', 'Crucial Ballistix 16GB']
   }
 };
 
 
 const ssdComponents = {
   'Samsung 980 evo 512GB': {
-    compatibleCPUs: ['Intel Core i7', 'Intel Core i3', 'Intel Core i5', 'Intel Core i9', 'AMD Ryzen 5', 'AMD Ryzen 7', 'AMD Ryzen 9'],
-    compatibleGPUs: ['Nvidia RTX 3070'],
+    compatibleCPUs: ['Intel Core i7', 'Intel Core i3', 'Intel Core i5', 'Intel Core i9', 'AMD Ryzen 3', 'AMD Ryzen 5', 'AMD Ryzen 7', 'AMD Ryzen 9'],
+    compatibleGPUs: ['Nvidia RTX 3070','Nvidia RTX 3080', 'Nvidia RTX 3090'],
     compatibleMotherboards: ['MSI B550 GAMING PLUS', 'MSI B560M Pro'],
     compatiblePSUs: ['Corsair 900W PSU'],
     compatibleRAM: ['Crucial Ballistix 32GB', 'Crucial Ballistix 64GB', 'Crucial Ballistix 16GB']
   },
   'Samsung 980 evo 2TB': {
-    compatibleCPUs: ['Intel Core i7', 'Intel Core i3', 'Intel Core i5', 'Intel Core i9', 'AMD Ryzen 5', 'AMD Ryzen 7', 'AMD Ryzen 9'],
-    compatibleGPUs: ['Nvidia RTX 3070'],
+    compatibleCPUs: ['Intel Core i7', 'Intel Core i3', 'Intel Core i5', 'Intel Core i9', 'AMD Ryzen 3', 'AMD Ryzen 5', 'AMD Ryzen 7', 'AMD Ryzen 9'],
+    compatibleGPUs: ['Nvidia RTX 3070','Nvidia RTX 3080', 'Nvidia RTX 3090'],
     compatibleMotherboards: ['MSI B550 GAMING PLUS', 'MSI B560M Pro'],
     compatiblePSUs: ['Corsair 900W PSU'],
     compatibleRAM: ['Crucial Ballistix 32GB', 'Crucial Ballistix 64GB', 'Crucial Ballistix 16GB']
   },
   'Samsung 980 evo 1TB': {
-    compatibleCPUs: ['Intel Core i9'],
+    compatibleCPUs: ['Intel Core i7', 'Intel Core i3', 'Intel Core i5', 'Intel Core i9', 'AMD Ryzen 3', 'AMD Ryzen 5', 'AMD Ryzen 7', 'AMD Ryzen 9'],
     compatibleGPUs: ['Nvidia RTX 3080', 'Nvidia RTX 3070', 'Nvidia RTX 3090'],
     compatibleMotherboards: ['MSI B550 GAMING PLUS', 'MSI B560M Pro'],
     compatiblePSUs: ['Corsair 900W PSU'],

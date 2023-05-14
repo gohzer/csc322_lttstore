@@ -37,12 +37,14 @@
     cursor: pointer;
   }
   
-  .clearCartButton {
-    margin-top: 2rem;
-  }
+.cartContainer {
+  margin: 2rem;
+  width: 85%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
   
-  .checkoutButton {
-    align-self: flex-end;
-    margin-top: 2rem;
-  }
-  
+.cost {
+  font-size: 1.5rem;
+}
