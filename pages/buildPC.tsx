@@ -75,8 +75,11 @@ export default function BuildPC() {
       components.ram.id.replaceAll(/\s/g,''),
       components.gpu.id.replaceAll(/\s/g,''),
       components.case.id.replaceAll(/\s/g,''),
-      components.psu.id.replaceAll(/\s/g,'')
-    )
+      components.psu.id.replaceAll(/\s/g,''),
+      components.ssd.id.replaceAll(/\s/g,'')
+    ).then(() => {
+      router.push("/")
+    })
   }
 
   return (
@@ -113,6 +116,7 @@ export default function BuildPC() {
             <button className={styles.customizeButton} onClick={handleClearSelection}>
               Clear Selection
             </button>
+            {/* TODO: make this employee only */}
             <button className={styles.customizeButton} onClick={handleComputerSubmit}>
               Add To Main Screen
             </button>

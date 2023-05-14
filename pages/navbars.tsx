@@ -18,13 +18,13 @@ export default function Navbar() {
     const [componentList, setComponentList] = useState<NavbarLink[]>([]);
     const [reload, setReload] = useState<boolean>(false);
     async function checkEmployee() {
-        let employees = await getEmployeeSet();
-        if(employees.has(auth.currentUser?.email)) {
-            let link = new NavbarLink("Employee Hub", "/employee");
-            componentList.push(link);
-            setComponentList(componentList);
-            setReload(true);
-        }
+        await getEmployeeSet().then(employees => {
+            if(employees.has(auth.currentUser?.email)) {
+                let link = new NavbarLink("Employee Hub", "/employee");
+                setComponentList([...componentList, link])
+            }
+        });
+        
     } 
     useEffect(() => {
             // this is a little hacky, but it works
@@ -32,9 +32,10 @@ export default function Navbar() {
         setComponentList(list);
         auth.onAuthStateChanged(() => {
             if(auth.currentUser) {
+                checkEmployee();
                 var list = NavbarLinks.filter(p => p.name != "Sign In");
                 setComponentList(list);
-                if(!reload) checkEmployee();
+                setReload(true)
             }
         });
     }, [reload]);

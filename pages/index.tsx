@@ -4,35 +4,124 @@ import styles from '@/styles/Home.module.css'
 import Footer from './footer'
 import Head from 'next/head';
 import Navbar from './navbars';
-import ComputerCards from './computerCards';
+import { ComputerCard, Computers } from './computerCards';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase/config"
-import { getAllComputerParts } from "../utils/database"
+import { getAllComputerParts, getAllComputers, getPartById } from "../utils/database"
+import { useEffect, useState } from 'react';
+
+type Part = {
+  name: string;
+  cost: number;
+  image: string;
+  type: string;
+};
+
+type suggestedBuild = {
+  title: string;
+  CPU: Part;
+  Motherboard: Part;
+  Memory: Part;
+  Storage: Part;
+  Video_Card: Part;
+  Case: Part;
+  Power_Supply: Part;
+  price: string;
+};
+
+function makePartFromObject(obj: any) {
+  return {
+    name: obj.name,
+    cost: obj.cost,
+    image: obj.image, 
+    type: obj.type
+  }
+}
 
 export default function Home() {
+  const [builds, setBuilds] = useState<suggestedBuild[]>([]);
+  async function getPCs() {
+    await getAllComputers().then(async res => {
+      for (let idx in res) {
+        let pc = res[idx];
+        await getBuild(pc.cpu, pc.case, pc.gpu, pc.mobo, pc.psu, pc.ram, pc.ssd).then(suggest => {
+          suggest.title = "Build#" + (idx);
+          builds.push(suggest)
+          setBuilds([...builds]);
+        })
+      }
+    });
+// yo
+  }
+
+  async function getBuild(
+    cpuId: string,
+    caseId: string,
+    gpuId: string,
+    moboId: string,
+    psuId: string,
+    ramId: string,
+    ssdId: string) {
+      console.log(cpuId, caseId, gpuId, psuId, ramId, ssdId)
+      let cpu = await getPartById(cpuId);
+      let gpu = await getPartById(gpuId);
+      let case_ = await getPartById(caseId);
+      let mobo = await getPartById(moboId);
+      let psu = await getPartById(psuId);
+      let ram = await getPartById(ramId);
+      let ssd = await getPartById(ssdId);
+      let cost = parseFloat(cpu?.cost)
+                + parseFloat(gpu?.cost) 
+                + parseFloat(mobo?.cost) 
+                + parseFloat(ram?.cost) 
+                + parseFloat(ssd?.cost) 
+                + parseFloat(case_?.cost) 
+                + parseFloat(psu?.cost);
+      let suggestBuild = {
+        title: "Build #",
+        CPU: makePartFromObject(cpu),
+        Motherboard: makePartFromObject(mobo),
+        Memory: makePartFromObject(ram),
+        Storage: makePartFromObject(ssd),
+        Video_Card: makePartFromObject(gpu),
+        Case: makePartFromObject(case_),
+        Power_Supply: makePartFromObject(psu),
+        price: cost.toString(),
+      }
+      return suggestBuild;
+  }
+
+  useEffect(() => {
+    getPCs();
+  }, []);
   return (
     <>
       <Head>
-          <title>MacroCenter</title>
+        <title>MacroCenter</title>
       </Head>
 
-       
+
       <div>
-      <Navbar /> 
+        <Navbar />
         <div className={styles.startbuilddiv}>
           <h1 className={styles.buildMachinep}>Build Your Own Machine</h1>
           <button className={styles.startbuildbtn}>
             <a href='/buildPC'>Start Build</a>
           </button>
-          
+
         </div>
 
         <div className={styles.cards}>
-          <ComputerCards />
+          <Computers />
         </div>
+
+        <p>User-Made Cards</p>
+        <ul>
+          {builds && builds.map(b => <li><ComputerCard key={b.title} {...b} /></li>)}
+        </ul>
       </div>
-      
-    <Footer/>
+
+      <Footer />
     </>
   )
 }

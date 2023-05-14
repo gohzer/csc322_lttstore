@@ -53,7 +53,7 @@ export function getIdFromDoc(docum) {
     return u._document.key.path.segments[6];
 }
 
-export async function addComputer(cpuId, moboId, ramId, gpuId, caseId, psuId) {
+export async function addComputer(cpuId, moboId, ramId, gpuId, caseId, psuId, ssdId) {
     await addDoc(collection(database, 'computers'), {
         "cpu": cpuId,
         "mobo": moboId,
@@ -61,5 +61,16 @@ export async function addComputer(cpuId, moboId, ramId, gpuId, caseId, psuId) {
         "gpu": gpuId,
         "case": caseId,
         "psu": psuId,
+        "ssd": ssdId
     });
+}
+
+export async function getAllComputers() {
+    return await queryCollection("computers/")
+}
+
+export async function getPartById(id) {
+    let partsCollection = collection(database, "computer_parts/");
+    let part = await getDoc(doc(partsCollection, id));
+    return part.data();
 }

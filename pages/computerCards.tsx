@@ -31,7 +31,7 @@ type suggestedBuild = {
 };
 
 
-const ComputerCard: React.FC<suggestedBuild> = (build) => {
+export const ComputerCard: React.FC<suggestedBuild> = (build) => {
   const buildQueryParam = encodeURIComponent(JSON.stringify(build));
 
   return (
@@ -54,7 +54,7 @@ const ComputerCard: React.FC<suggestedBuild> = (build) => {
 };
 
 
-const Computers = () => {
+export const Computers = () => {
   const [allParts, setAllParts] = useState<Part[]>([]);
   
   useEffect(() => {
