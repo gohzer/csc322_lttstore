@@ -48,6 +48,7 @@ export const ComputerCard: React.FC<suggestedBuild> = (build) => {
           <li>{build.Power_Supply.name} ({build.Power_Supply.type}): {build.Power_Supply.cost}</li>
         </ul>
         <p>Price: {build.price}</p>
+        <img className={styles.image} src={build.Video_Card.image} />
       </div>
     </Link>
   );
