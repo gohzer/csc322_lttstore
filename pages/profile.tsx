@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "./navbars";
 import Footer from "./footer";
 import { app, auth } from "@/firebase/config";
@@ -7,20 +7,30 @@ import styles from '@/styles/profile.module.css';
 
 export default function Profile() {
     const router = useRouter();
+    const [balance, setBalance] = useState(0);
     const [profileDetails, setProfileDetails] = useState<ProfileDetails>(
         new ProfileDetails("", "", false, 0)
         );
-    auth.onAuthStateChanged(() => {
-        if(auth.currentUser) {
-            var email = auth.currentUser.email || "NOT_LOGGED_IN";
-            var verfied = false; //placeholder
-            var account_type = "user"; //placeholder
-            var balance = 0; // placeholder
-            var details = new ProfileDetails(email, account_type, verfied, balance);
-            setProfileDetails(details);
-        }
-            
-    });
+
+    useEffect(() => {
+        auth.onAuthStateChanged(() => {
+            if(auth.currentUser) {
+                var email = auth.currentUser.email || "NOT_LOGGED_IN";
+                var verfied = false; //placeholder
+                var account_type = "user"; //placeholder
+
+                var bal_local = localStorage.getItem('balance');
+                if(bal_local === null) localStorage.setItem('balance', '0');
+                var balance = parseFloat(localStorage.getItem('balance') || '0');
+
+                setBalance(balance);
+                var details = new ProfileDetails(email, account_type, verfied, balance);
+                setProfileDetails(details);
+            }
+                
+        });
+    }, [])
+    
 
     function signOut() {
         auth.signOut()
@@ -29,6 +39,12 @@ export default function Profile() {
         })
         .catch(e => console.error(e));
     }
+
+    const addbal = () => {
+        setBalance(balance + 100);
+        localStorage.setItem('balance', `${balance + 100}`);
+    }
+
 
     return (
         <div>
@@ -41,9 +57,10 @@ export default function Profile() {
                 <ProfileItem email={profileDetails.email} 
                     account_type={profileDetails.account_type} 
                     approval={profileDetails.approval} 
-                    balance={profileDetails.balance} />
+                    balance={balance} />
                 
                 <button className={styles.button} onClick={signOut}>Sign Out</button>
+                <button className={styles.button} onClick={addbal}>Add Balance</button>
                 </div>
                 
             </div>
