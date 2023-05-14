@@ -45,7 +45,7 @@ export default function Home() {
       for (let idx in res) {
         let pc = res[idx];
         await getBuild(pc.cpu, pc.case, pc.gpu, pc.mobo, pc.psu, pc.ram, pc.ssd).then(suggest => {
-          suggest.title = "Build#" + (idx);
+          suggest.title = "Build " + (parseInt(idx, 10) + 1) ;
           builds.push(suggest)
           setBuilds([...builds]);
         })
@@ -78,7 +78,7 @@ export default function Home() {
                 + parseFloat(case_?.cost) 
                 + parseFloat(psu?.cost);
       let suggestBuild = {
-        title: "Build #",
+        title: "Build ",
         CPU: makePartFromObject(cpu),
         Motherboard: makePartFromObject(mobo),
         Memory: makePartFromObject(ram),
@@ -111,14 +111,16 @@ export default function Home() {
 
         </div>
 
-        <div className={styles.cards}>
-          <Computers />
-        </div>
+        <h1 className={styles.usercardh1}>Employee Made Builds</h1>
+        <Computers />
+        <h1 className={styles.usercardh1}>User Made Builds</h1>
 
-        <p>User-Made Cards</p>
-        <ul>
-          {builds && builds.map(b => <li><ComputerCard key={b.title} {...b} /></li>)}
-        </ul>
+        <div className={styles.usercardsscroll}>
+          <div className={styles.usercards}>
+            {builds && builds.map(b => <ComputerCard key={b.title} {...b} />)}
+          </div>
+        </div>
+        
       </div>
 
       <Footer />

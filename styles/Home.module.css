@@ -35,6 +35,23 @@
     padding: 1rem;
   }
 
-  .cards{
-    display: inline;
+  
+  .usercardsscroll {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+    background-color: #E0DFF1;
+  }
+  
+
+  .usercards {
+    display: flex;
+    margin: 20px;
+
+  }
+
+  .usercardh1 {
+    font-size: 40px;
+    margin: 20px;
+    
   }

@@ -104,6 +104,7 @@ export const Computers = () => {
   };
 
   return (
+    <>
     <div className={styles.container}>
       {allParts.length > 0 ? (
         <>
@@ -115,6 +116,8 @@ export const Computers = () => {
         <p>Loading...</p>
       )}
     </div>
+    </>
+    
   );
 };
 
