@@ -17,8 +17,9 @@ const Cart = () => {
   const [cart, setCart] = useState<Part[]>([]);
   const [price, setPrice] = useState<number>(0);
   const [reload, setReload] = useState(false);
+  const [balance, setBalance] = useState(0);
   const router = useRouter();
-
+  
   // Function to load the cart from localStorage
   const loadCart = () => {
     const savedCart = JSON.parse(localStorage.getItem('cart') ?? '[]');
@@ -33,6 +34,8 @@ const Cart = () => {
 
   // Function to handle removing an item from the cart
   const handleRemoveItem = (index: number) => {
+    let itemPrice = cart[index].cost;
+    setPrice(price - itemPrice);
     const newCart = [...cart];
     newCart.splice(index, 1);
     setCart(newCart);
@@ -48,12 +51,25 @@ const Cart = () => {
   // Function to proceed to checkout
   const handleCheckout = () => {
     // Navigate to the checkout page (replace 'checkout' with the path of your checkout page)
-    router.push('/checkout');
+    let balance = parseFloat(localStorage.getItem('balance') || '0');
+    if(price > balance) {
+      alert("Insufficient funds! Get your bread up or remove some items.")
+    }
+    else {
+      handleClearCart();
+      let newBal = (balance - price)
+      localStorage.setItem('balance', newBal.toString())
+      setBalance(newBal);
+      setPrice(0);
+      alert("Items purchased! The cost has been debited from your account.")
+    }
   };
 
   // Load cart from localStorage when component mounts
   useEffect(() => {
     loadCart();
+    let bal = parseFloat(localStorage.getItem('balance') || '0');
+    setBalance(bal);
   }, [reload]);
 
   return (
@@ -76,6 +92,7 @@ const Cart = () => {
           <button className={`${styles.button} ${styles.clearCartButton}`} onClick={handleClearCart}>Clear Cart</button>
           <button className={`${styles.button} ${styles.checkoutButton}`} onClick={handleCheckout}>Proceed to Checkout</button>
           <p className={styles.cost}>Cost: {price}</p>
+          <p className={styles.cost}>Balance: {balance}</p>
         </div>
         
       </div>
