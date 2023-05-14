@@ -9,21 +9,21 @@ import { getAllComputerParts } from '@/utils/database';
 
 const cpuComponents = {
   'Intel Core i7': {
-    compatibleGPUs: ['Nvidia RTX 3080'],
+    compatibleGPUs: ['Nvidia RTX 3070', 'Nvidia RTX 3080', 'Nvidia RTX 3090'],
     compatibleSSDs: ['Samsung 980 evo 512GB'],
     compatiblePSUs: ['Corsair 900W PSU'],
     compatibleRAM: ['Crucial Ballistix 32GB', 'Crucial Ballistix 64GB'],
     compatibleMotherboards: ['MSI B550 GAMING PLUS']
   },
   'Intel Core i3': {
-    compatibleGPUs: ['Nvidia RTX 3070'],
+    compatibleGPUs: ['Nvidia RTX 3070', 'Nvidia RTX 3080', 'Nvidia RTX 3090'],
     compatibleSSDs: ['Samsung 980 evo 512GB', 'Samsung 980 evo 2TB'],
     compatiblePSUs: ['Corsair 900W PSU'],
     compatibleRAM: ['Crucial Ballistix 32GB', 'Crucial Ballistix 64GB'],
     compatibleMotherboards: ['MSI B550 GAMING PLUS', 'MSI B560M Pro']
   },
   'Intel Core i5': {
-    compatibleGPUs: ['Nvidia RTX 3070'],
+    compatibleGPUs: ['Nvidia RTX 3070', 'Nvidia RTX 3080', 'Nvidia RTX 3090'],
     compatibleSSDs: ['Samsung 980 evo 512GB', 'Samsung 980 evo 2TB'],
     compatiblePSUs: ['Corsair 900W PSU'],
     compatibleRAM: ['Crucial Ballistix 32GB', 'Crucial Ballistix 64GB'],
@@ -37,21 +37,21 @@ const cpuComponents = {
     compatibleMotherboards: ['MSI B550 GAMING PLUS', 'MSI B560M Pro']
   },
   'AMD Ryzen 5': {
-    compatibleGPUs: ['Nvidia RTX 3070'],
+    compatibleGPUs: ['Nvidia RTX 3070', 'Nvidia RTX 3080', 'Nvidia RTX 3090'],
     compatibleSSDs: ['Samsung 980 evo 512GB', 'Samsung 980 evo 2TB'],
     compatiblePSUs: ['Corsair 900W PSU'],
     compatibleRAM: ['Crucial Ballistix 32GB', 'Crucial Ballistix 64GB', 'Crucial Ballistix 16GB'],
     compatibleMotherboards: ['MSI B550 GAMING PLUS']
   },
   'AMD Ryzen 7': {
-    compatibleGPUs: ['Nvidia RTX 3070'],
+    compatibleGPUs: ['Nvidia RTX 3070', 'Nvidia RTX 3080', 'Nvidia RTX 3090'],
     compatibleSSDs: ['Samsung 980 evo 512GB', 'Samsung 980 evo 2TB'],
     compatiblePSUs: ['Corsair 900W PSU'],
     compatibleRAM: ['Crucial Ballistix 32GB', 'Crucial Ballistix 64GB', 'Crucial Ballistix 16GB'],
     compatibleMotherboards: ['MSI B550 GAMING PLUS']
   },
   'AMD Ryzen 9': {
-    compatibleGPUs: ['Nvidia RTX 3070'],
+    compatibleGPUs: ['Nvidia RTX 3070', 'Nvidia RTX 3080', 'Nvidia RTX 3090'],
     compatibleSSDs: ['Samsung 980 evo 512GB'],
     compatiblePSUs: ['Corsair 900W PSU'],
     compatibleRAM: ['Crucial Ballistix 32GB'],

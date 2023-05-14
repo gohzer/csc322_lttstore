@@ -36,3 +36,20 @@
     background: #0056b3;
   }
   
+  .image {
+    max-height: 100px;
+    max-width: 100px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .component {
+    width: 75%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .name {
+    font-size: 1.5rem;
+  }

@@ -72,9 +72,9 @@ export default function BuildPC() {
               <h2>{type.toUpperCase()}</h2>
               {component.name ? (
                 <div className={styles.component}>
-                  <h2 className={styles.name}>{component.name}</h2>
                   <img src={component.image} alt={component.name} className={styles.image} />
-                  <h3>${component.cost}</h3>
+                  <h2 className={styles.name}>{component.name}</h2>
+                  <h3 className={styles.name}>${component.cost}</h3>
                 </div>
               ) : (
                 <p>No component selected</p>
