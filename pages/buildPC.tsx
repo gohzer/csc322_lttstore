@@ -1,88 +1,101 @@
 
-
-import Image from'next/image'
-import styles from '@/styles/buildPC.module.css'
-import RTX2080 from '../public/RTX2080.jpg'
-import motherboard from '../public/motherboard.jpg'
-import i9 from '../public/I9Core.jpg'
-import Navbar from './navbars'
-import Head from 'next/head'
-import Footer from './footer'
-import { getAllComputerParts } from '@/utils/database';
+/* Next todo: need to make the compatbility test*/
+import styles from '@/styles/buildPC.module.css';
+import Navbar from './navbars';
+import Head from 'next/head';
+import Footer from './footer';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
+interface Component {
+  name: string;
+  image: string;
+  cost: number;
+}
 
-/* TODO: 
-1. Need to add functionality to the customize button
-2. when the button is clicked, I need to check for which component the button is clicked, if the button is clicked for CPU
-   then i need to go to the customizeOptionPage displaying only the CPUS available. 
-3. I also need to check what other components were selected in this buildPC page before going to the customize page, because
-   I need to check which (e.g) CPU components are compatible with the motherboard and video card that were selected prior
-   and ONLY display the components that are compatible with the selected motherboard and video card. 
+const defaultComponents = {
+  cpu: {} as Component,
+  ram: {} as Component,
+  mobo: {} as Component,
+  gpu: {} as Component,
+  ssd: {} as Component,
+  case: {} as Component,
+  psu: {} as Component,
+};
 
-4. Same steps need to be taken for all components. 
-5. Need to also have an add to cart button that becomes clickable once a component is selected in that row
+export default function BuildPC() {
+  const router = useRouter();
 
-6.  Maybe I need to make the addtocart button a global variable
+  const [components, setComponents] = useState<typeof defaultComponents>(() => {
+    if (typeof window !== 'undefined') {
+      const savedComponents = localStorage.getItem('selectedComponents');
+      return savedComponents ? JSON.parse(savedComponents) : defaultComponents;
+    }
+    return defaultComponents;
+  });
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('selectedComponents', JSON.stringify(components));
+    }
+  }, [components]);
 
-*/
+  useEffect(() => {
+    const clearSelectedComponents = () => {
+      localStorage.removeItem('selectedComponents');
+    };
 
-const getParts = () => {
-  
+    window.addEventListener('beforeunload', clearSelectedComponents);
 
-    let parts = getAllComputerParts();
-    parts.then(result => {
-      console.log(result);
-    });
+    return () => {
+      window.removeEventListener('beforeunload', clearSelectedComponents);
+    };
+  }, []);
 
-
+  const handleClearSelection = () => {
+    setComponents(defaultComponents);
+    localStorage.removeItem('selectedComponents');
   };
 
-  export default function BuildPC() {
-    const router = useRouter();
-    getParts();
-    return (
+  return (
     <>
-        <Head>
-          <title>Build | MacroCenter</title>
-        </Head>
-        <Navbar/>
-        <h1>
-        &nbsp;Welcome to the Macrocenter!&nbsp;
-          Build your PC here.
-        </h1>
-        
-        <div className={styles.container}>
-            <h1>&nbsp;Please choose your component:&nbsp;</h1>
-            <div className={styles.grid}>
-                <div className={styles.gridItem}>
-                    <h2>CPU</h2>
-                    <button className={styles.customizeButton} onClick={() => router.push('/customizeOptionPage?component=cpu')}>Customize</button>
+      <Head>
+        <title>Build | MacroCenter</title>
+      </Head>
+      <Navbar />
+      <h1>Welcome to the Macrocenter! Build your PC here.</h1>
+      <div className={styles.container}>
+        <h1>Please choose your component:</h1>
+        <div className={styles.grid}>
+          {Object.entries(components).map(([type, component]: [string, Component], index) => (
+            <div className={styles.gridItem} key={index}>
+              <h2>{type.toUpperCase()}</h2>
+              {component.name ? (
+                <div className={styles.component}>
+                  <h2 className={styles.name}>{component.name}</h2>
+                  <img src={component.image} alt={component.name} className={styles.image} />
+                  <h3>${component.cost}</h3>
                 </div>
-                <div className={styles.gridItem}>
-                    <h2>RAM</h2>
-                    <button className={styles.customizeButton} onClick={() => router.push('/customizeOptionPage?component=ram')}>Customize</button>
-                </div>
-                <div className={styles.gridItem}>
-                    <h2>Motherboard</h2>
-                    <button className={styles.customizeButton} onClick={() => router.push('/customizeOptionPage?component=mobo')}>Customize</button>
-                </div>
-                <div className={styles.gridItem}>
-                    <h2>Graphics Card</h2>
-                    <button className={styles.customizeButton} onClick={() => router.push('/customizeOptionPage?component=gpu')}>Customize</button>
-                </div>
-                <div className={styles.gridItem}>
-                    <h2>Case</h2>
-                    <button className={styles.customizeButton} onClick={() => router.push('/customizeOptionPage?component=case')}>Customize</button>
-                </div>
-                <div className={styles.gridItem}>
-                    <h2>PSU</h2>
-                    <button className={styles.customizeButton} onClick={() => router.push('/customizeOptionPage?component=psu')}>Customize</button>
-                </div>
+              ) : (
+                <p>No component selected</p>
+              )}
+              <button
+                className={styles.customizeButton}
+                onClick={() => router.push(`/customizeOptionPage?component=${type}`)}
+              >
+                Customize
+              </button>
             </div>
+          ))}
+          <div className={styles.gridItem}>
+            <button className={styles.clearButton} onClick={handleClearSelection}>
+              Clear Selection
+            </button>
+          </div>
         </div>
-        <Footer/>
+      </div>
+      <Footer />
     </>
-    )
+  );
 }
+
