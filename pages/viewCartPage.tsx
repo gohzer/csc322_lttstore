@@ -77,6 +77,10 @@ const Cart = () => {
     }
   };
 
+  function handlePurchaseHistory() {
+    router.push("/purchaseHistory")
+  }
+
   // Load cart from localStorage when component mounts
   useEffect(() => {
     loadCart();
@@ -102,6 +106,7 @@ const Cart = () => {
         </ul>
         <div className={styles.cartContainer}>
           <button className={`${styles.button} ${styles.clearCartButton}`} onClick={handleClearCart}>Clear Cart</button>
+          <button className={`${styles.button} ${styles.clearCartButton}`} onClick={handlePurchaseHistory}>View Purchase History</button>
           <button className={`${styles.button} ${styles.checkoutButton}`} onClick={handleCheckout}>Proceed to Checkout</button>
           <p className={styles.cost}>Cost: {price}</p>
           <p className={styles.cost}>Balance: {balance}</p>
