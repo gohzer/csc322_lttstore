@@ -98,7 +98,7 @@ const AddToCart = () => {
               ) : null
             )}
             </ul>
-            <p>Price: {suggestedBuild.price}</p>
+            <p className={styles.price}>Price: {suggestedBuild.price}</p>
           </>
         )}
       </div>
