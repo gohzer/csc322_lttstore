@@ -22,6 +22,7 @@ export default function PurchaseHistory() {
     return (
         <div>
             <Navbar />
+            <div className={styles.grid}>
             <div className={styles.container}>
                 <h1 className={styles.header}>Purchase History</h1>
                 <div className={styles.listContainer}>
@@ -36,6 +37,15 @@ export default function PurchaseHistory() {
                         <p className={styles.listItem}>{p.cost}</p>
                     </div>)}
             </div>
+            <div className={styles.contact}>
+                <h1 className={styles.header}>We are here to Help 24/7</h1>
+                <p className={styles.supportp}>Contact Support Team For All your Inquires</p>
+                    <button className={styles.supportbtn}>
+                    <a href='/contact'>Support</a>
+                </button>
+            </div>
+            </div>
+           
         </div>
     )
 }
