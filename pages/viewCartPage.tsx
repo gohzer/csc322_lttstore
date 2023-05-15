@@ -94,8 +94,10 @@ const Cart = () => {
         <title>Cart | MacroCenter</title>
       </Head>
       <Navbar/>
+      
       <div className={styles.container}>
-        <h1 className={styles.title}>Cart</h1>
+        <h1 className={styles.title}>Shopping Cart</h1>
+        <div className={styles.cartlistcontainer}>
         <ul className={styles.cartList}>
           {cart.map((item, index) => (
             <li className={styles.cartItem} key={index}>
@@ -104,6 +106,8 @@ const Cart = () => {
             </li>
           ))}
         </ul>
+        </div>
+       
         <div className={styles.cartContainer}>
           <button className={`${styles.button} ${styles.clearCartButton}`} onClick={handleClearCart}>Clear Cart</button>
           <button className={`${styles.button} ${styles.clearCartButton}`} onClick={handlePurchaseHistory}>View Purchase History</button>

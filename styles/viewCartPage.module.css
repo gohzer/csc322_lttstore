@@ -10,13 +10,16 @@
   .title {
     font-size: 2rem;
     color: #333;
-    margin-bottom: 1rem;
+    margin-left: 4.5rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
   }
   
   .cartList {
     list-style-type: none;
     padding: 0;
     width: 100%;
+    margin: 1rem;
   }
   
   .cartItem {
@@ -30,21 +33,50 @@
   .button {
     padding: 0.5rem 1rem;
     margin-left: 1rem;
-    background-color: #0070f3;
+    background-color: blueviolet;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
   }
+
+  .button:hover {
+    background-color: #ffc107;
+    color: #000;
+}
   
 .cartContainer {
-  margin: 2rem;
-  width: 85%;
+  margin-top: 2rem;
+  margin-left: 4.2rem; 
+  width: 90%;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
+  background: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
   
 .cost {
   font-size: 1.5rem;
+}
+
+.cartlistcontainer {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
