@@ -52,14 +52,30 @@ const AddToCart = () => {
 
   const initialBuild: Build | null = build ? JSON.parse(decodeURIComponent(build as string)) : null;
   const [suggestedBuild, setSuggestedBuild] = useState<Build | null>(initialBuild);
-  console.log(initialBuild);
+  console.log("initial build", initialBuild);
 
  
-  // useEffect(() => {
-  //   if (typeof window !== 'undefined') {
-  //     localStorage.setItem('selectedComponents', JSON.stringify(suggestedBuild));
-  //   }
-  // }, [suggestedBuild]);
+  useEffect(() => {
+    // If suggestedBuild is null, try to load it from localStorage.
+    if (suggestedBuild === null && typeof window !== 'undefined') {
+      const selectedComponents = JSON.parse(localStorage.getItem('selectedComponents') ?? 'null');
+      if (selectedComponents !== null) {
+        // Reverse the operation to get suggestedBuild.
+        const newSuggestedBuild: Build = {
+          title: selectedComponents.title,
+          CPU: selectedComponents.CPU,
+          Motherboard: selectedComponents.Motherboard,
+          Memory: selectedComponents.Memory,
+          Storage: selectedComponents.Storage,
+          Video_Card: selectedComponents.Video_Card,
+          Case: selectedComponents.Case,
+          Power_Supply: selectedComponents.Power_Supply,
+          price: selectedComponents.price
+        };
+        setSuggestedBuild(newSuggestedBuild);
+      }
+    }
+  }, []);
 
   const handleAddToCart = (part: Part) => {
     const existingCart = JSON.parse(localStorage.getItem('cart') ?? '[]');
@@ -76,7 +92,9 @@ const AddToCart = () => {
       gpu: suggestedBuild?.Video_Card,
       ssd: suggestedBuild?.Storage,
       case: suggestedBuild?.Case,
-      psu: suggestedBuild?.Power_Supply
+      psu: suggestedBuild?.Power_Supply,
+      price: suggestedBuild?.price,
+      title: suggestedBuild?.title
   };
   
   // Save these components to local storage.

@@ -293,10 +293,29 @@ const CustomizeOptionPage = () => {
       let parsedComponents = JSON.parse(selectedComponents);
       console.log("checking in select", componentType);
   
-      console.log(item);
+      console.log(item.cost);
       parsedComponents[componentType] = item;
-      console.log("parsed",parsedComponents);
-      localStorage.setItem('selectedComponents', JSON.stringify(parsedComponents));
+
+      const suggestedBuild = {
+        CPU: parsedComponents.cpu,
+        Memory: parsedComponents.ram,
+        Motherboard: parsedComponents.mobo,
+        Video_Card: parsedComponents.gpu,
+        Storage: parsedComponents.ssd,
+        Case: parsedComponents.case,
+        Power_Supply: parsedComponents.psu,
+        price: parsedComponents.price,
+        title: parsedComponents.title
+      };
+
+      suggestedBuild.price = Number(suggestedBuild.CPU.cost) + Number(suggestedBuild.Memory.cost) + 
+      Number(suggestedBuild.Motherboard.cost) + Number(suggestedBuild.Video_Card.cost) + Number(suggestedBuild.Storage.cost)
+      + Number(suggestedBuild.Case.cost) + Number(suggestedBuild.Power_Supply.cost);
+      
+
+
+      console.log("updated suggested build in select:", suggestedBuild);
+      localStorage.setItem('selectedComponents', JSON.stringify(suggestedBuild));
       console.log("localstorage",localStorage.getItem('selectedComponents'));  // updated this line
       router.push(`/addToCart`);
     }
