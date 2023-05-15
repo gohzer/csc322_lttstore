@@ -39,6 +39,7 @@ export default function BuildPC() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       localStorage.setItem('selectedComponents', JSON.stringify(components));
+      console.log("local storage:", localStorage);
     }
   }, [components]);
 

@@ -1,11 +1,12 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import styles from '@/styles/customizeOptionPage.module.css';
+import styles from '@/styles/customizeOptionPageSB.module.css';
 import Head from 'next/head';
 import Navbar from './navbars';
 import Footer from './footer';
 import { getAllComputerParts } from '@/utils/database';
 
+console.log("IN the suggested build version");
 
 const cpuComponents = {
   'Intel Core i7': {
@@ -157,9 +158,6 @@ const ssdComponents = {
 
 
 
-
-
-
 interface ComponentItem {
   name: string;
   image: string;
@@ -178,7 +176,9 @@ const CustomizeOptionPage = () => {
   ) => {
     let list: ComponentItem[] = [];
   
-    if (currentComponentType === 'cpu') {
+    console.log("inside return comp functi", filteredParts);
+    console.log(componentType);
+    if (currentComponentType.toLowerCase() === 'cpu') {
       for (let i = 0; i < filteredParts.length; i++) {
         let cpu = filteredParts[i].name;
         let selectedGpu = selectedComponents.gpu.name;
@@ -196,7 +196,7 @@ const CustomizeOptionPage = () => {
           list.push(filteredParts[i]);
         }
       }
-    } else if (currentComponentType === 'ssd') {
+    } else if (currentComponentType.toLowerCase() === 'ssd') {
       for (let i = 0; i < filteredParts.length; i++) {
         let ssd = filteredParts[i].name;
         let selectedCpu = selectedComponents.cpu.name;
@@ -216,7 +216,7 @@ const CustomizeOptionPage = () => {
       }
     } 
     
-    else if (currentComponentType === 'ram') {
+    else if (currentComponentType.toLowerCase() === 'ram') {
       for (let i = 0; i < filteredParts.length; i++) {
         let ram = filteredParts[i].name;
         let selectedCpu = selectedComponents.cpu.name;
@@ -235,7 +235,7 @@ const CustomizeOptionPage = () => {
         }
       }
     }
-    else if (currentComponentType === 'gpu') {
+    else if (currentComponentType.toLowerCase() === 'gpu') {
       for (let i = 0; i < filteredParts.length; i++) {
         let gpu = filteredParts[i].name;
         let selectedCpu = selectedComponents.cpu.name;
@@ -256,7 +256,7 @@ const CustomizeOptionPage = () => {
     }
 
 
-    else if (currentComponentType === 'mobo') {
+    else if (currentComponentType.toLowerCase() === 'mobo') {
       for (let i = 0; i < filteredParts.length; i++) {
         let mobo = filteredParts[i].name;
         let selectedCpu = selectedComponents.cpu.name;
@@ -276,7 +276,7 @@ const CustomizeOptionPage = () => {
       }
     }
 
-    else if (currentComponentType === 'psu' || currentComponentType === 'case') {
+    else if (currentComponentType.toLowerCase() === 'psu' || currentComponentType.toLowerCase() === 'case') {
       // For PSU and case, we don't need to check compatibility
       list = filteredParts;
     }
@@ -286,20 +286,22 @@ const CustomizeOptionPage = () => {
   };
   
   
-  
-
-
-  
 
   const onSelectComponent = (item: ComponentItem) => {
     let selectedComponents = localStorage.getItem('selectedComponents');
     if (selectedComponents && typeof componentType === 'string') {
       let parsedComponents = JSON.parse(selectedComponents);
+      console.log("checking in select", componentType);
+  
+      console.log(item);
       parsedComponents[componentType] = item;
+      console.log("parsed",parsedComponents);
       localStorage.setItem('selectedComponents', JSON.stringify(parsedComponents));
-      router.push(`/buildPC`);
+      console.log("localstorage",localStorage.getItem('selectedComponents'));  // updated this line
+      router.push(`/addToCart`);
     }
   };
+  
 
   const [componentItems, setComponentItems] = useState<ComponentItem[]>([]);
 
@@ -313,16 +315,14 @@ const CustomizeOptionPage = () => {
         console.log("Filtered parts:", filteredParts);
 
         let selectedComponents = localStorage.getItem('selectedComponents') as string | null;
-        console.log(selectedComponents);
+        console.log("selected components",selectedComponents);
 
         if (selectedComponents === null || selectedComponents === JSON.stringify({cpu:{},ram:{},mobo:{},gpu:{},ssd:{},case:{},psu:{}})) {
           
           console.log("Filtered parts:", filteredParts);
 
           setComponentItems(filteredParts);
-          //return;
-          // Or you can assign a default value to selectedComponents:
-          // selectedComponents = JSON.stringify({cpu: {}, gpu: {}, ssd: {}});
+
         }
         
         else {

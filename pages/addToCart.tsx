@@ -1,13 +1,4 @@
 // pages/addToCart.tsx
-import React from 'react';
-import { useRouter } from 'next/router';
-import styles from '../styles/AddToCart.module.css';
-import Navbar from './navbars';
-import Head from 'next/head';
-import Footer from './footer';
-import { getAllComputerParts } from '@/utils/database';
-import Link from 'next/link';
-
 
 /* TODO: Fix up this cart PAGE
 1. In the home page, for the suggested build, have a set of parts associated with each build. use the firebase api
@@ -22,6 +13,17 @@ TODO: CART Page
 1. User will  be shown all of the parts they have in their cart.
 2. They will be given the option to checkout, delete an item from the cart or clear their entire cart. 
 */
+
+// pages/addToCart.tsx
+// pages/addToCart.tsx
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import styles from '../styles/AddToCart.module.css';
+import Navbar from './navbars';
+import Head from 'next/head';
+import Footer from './footer';
+import { getAllComputerParts } from '@/utils/database';
+import Link from 'next/link';
 
 interface Part {
   name: string;
@@ -42,16 +44,22 @@ interface Build {
   price: string;
 }
 
-const clearCart = () => {
-  // setCart([]);
-  localStorage.removeItem('cart');
-};
+
 
 const AddToCart = () => {
   const router = useRouter();
   const { build } = router.query;
 
-  const suggestedBuild: Build | null = build ? JSON.parse(decodeURIComponent(build as string)) : null;
+  const initialBuild: Build | null = build ? JSON.parse(decodeURIComponent(build as string)) : null;
+  const [suggestedBuild, setSuggestedBuild] = useState<Build | null>(initialBuild);
+  console.log(initialBuild);
+
+ 
+  // useEffect(() => {
+  //   if (typeof window !== 'undefined') {
+  //     localStorage.setItem('selectedComponents', JSON.stringify(suggestedBuild));
+  //   }
+  // }, [suggestedBuild]);
 
   const handleAddToCart = (part: Part) => {
     const existingCart = JSON.parse(localStorage.getItem('cart') ?? '[]');
@@ -60,20 +68,63 @@ const AddToCart = () => {
     console.log(`${part.name} added to cart`);
   };
 
+  const handleCustomize = (componentType: string) => {
+    const components = {
+      cpu: suggestedBuild?.CPU,
+      ram: suggestedBuild?.Memory,
+      mobo: suggestedBuild?.Motherboard,
+      gpu: suggestedBuild?.Video_Card,
+      ssd: suggestedBuild?.Storage,
+      case: suggestedBuild?.Case,
+      psu: suggestedBuild?.Power_Supply
+  };
+  
+  // Save these components to local storage.
 
-  const checkCart = () => {
-    const cart = JSON.parse(localStorage.getItem('cart') ?? '[]');
-    console.log(cart);
+  if(componentType === "CPU") {
+    componentType = "cpu";
+  }
 
-    let parts = getAllComputerParts();
-    // parts.then(result => {
-    //   console.log(result);
-    // });
-    //console.log(suggestedBuild);
-    //console.log(suggestedBuild.keys());
+  else if(componentType === "Motherboard") {
+    componentType = "mobo";
+  }
+
+  else if(componentType === "Memory") {
+    componentType = "ram";
+
+  }
+
+  else if(componentType === "Storage") {
+    componentType = "ssd";
+
+  }
+
+  else if(componentType === "Video_Card") {
+    componentType = "GPU";
+
+  }
+
+  else if(componentType === "Case") {
+    componentType = "case";
+
+  }
+
+  else if(componentType === "Power_Supply") {
+    componentType = "psu";
+
+  }
+
+
+
+  localStorage.setItem('selectedComponents', JSON.stringify(components));
+  console.log("localstorage",localStorage.getItem('selectedComponents'));  
+  router.push(`/customizeOptionPageSB?component=${componentType}`);
+  //console.log("localstorage",localStorage.getItem('selectedComponents'));  
 
   };
 
+
+  
   return (
     <>
       <Head>
@@ -92,7 +143,7 @@ const AddToCart = () => {
                   <span>{key.replace("_", " ")}</span>
                   <span className={styles.componentName}>{(part as Part).name} ({(part as Part).type})</span>
                   <span>{(part as Part).cost}</span>
-                  <button className={styles.customizeButtonComponent}>Customize</button>
+                  <button className={styles.customizeButtonComponent} onClick={() => handleCustomize(key)}>Customize</button>
                   <button className={styles.addToCartButtonComponent} onClick={() => handleAddToCart(part as Part)}>Add to cart</button>
                 </li>
               ) : null
