@@ -27,6 +27,8 @@ const defaultComponents: { [key: string]: any } = {
 export default function BuildPC() {
   const router = useRouter();
   const [employee, setEmployee] = useState();
+  const [showSuccess, setShowSuccess] = useState<boolean>(false);
+
 
   const [components, setComponents] = useState<typeof defaultComponents>(() => {
     if (typeof window !== 'undefined') {
@@ -60,6 +62,18 @@ export default function BuildPC() {
     localStorage.removeItem('selectedComponents');
   };
 
+  const handleAddComponentToCart = (component: Component) => {
+    const existingCart = JSON.parse(localStorage.getItem('cart') ?? '[]');
+    const updatedCart = [...existingCart, component];
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
+    console.log(`${component.name} added to cart`);
+
+
+    setShowSuccess(true);
+    // Hide success message after 3 seconds
+    setTimeout(() => setShowSuccess(false), 3000);
+  };
+
   const handleComputerSubmit = () => {
     // check that all components are selected
     for(const property in components) {
@@ -90,6 +104,7 @@ export default function BuildPC() {
       </Head>
       <Navbar />
       <h1 className={styles.title}>Welcome to the Macrocenter! Build your PC here.</h1>
+      {showSuccess && <div className={styles.successMessage}>Success! Added Item to Cart</div>}
       <div className={styles.container}>
         <h1>Please choose your component:</h1>
         <div className={styles.grid}>
@@ -106,10 +121,16 @@ export default function BuildPC() {
                 <p>No component selected</p>
               )}
               <button
-                className={styles.customizeButton}
+                className={styles.customizeButtonComponent}
                 onClick={() => router.push(`/customizeOptionPage?component=${type}`)}
               >
                 Customize
+              </button>
+              <button
+                className={styles.addToCartButtonComponent}
+                onClick={() => handleAddComponentToCart(component)}
+              >
+                Add to Cart
               </button>
             </div>
           ))}

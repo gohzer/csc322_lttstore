@@ -1,5 +1,12 @@
 /* Home.module.css */
 
+.successMessage {
+  text-align: center;
+  margin-top: 10px;
+  text-emphasis-color: green;
+}
+
+
 .container {
     width: 80%;
     padding: 0 15px;
@@ -34,20 +41,37 @@
     justify-content: space-between;
   }
   
-  .customizeButton {
-    border: none;
-    background: #ffc107;
-    color: #000;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s ease;
+  .addToCartButtonComponent,
+  .customizeButtonComponent {
+      padding: 8px 16px;
+      font-size: 0.9em;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      color: #fff;
+      transition: background-color 0.2s ease-in-out;
+      margin-left: 20px;
   }
   
-  .customizeButton:hover {
-    background: blueviolet;
-    color: #fff;
+  .addToCartButtonComponent {
+      background-color: blueviolet;
   }
+  
+  .addToCartButtonComponent:hover {
+      background-color: #ffc107;
+      color: #000;
+  }
+  
+  .customizeButtonComponent {
+      background-color: #ffc107;
+      color: #000;
+  }
+  
+  .customizeButtonComponent:hover {
+      background-color: blueviolet;
+      color:#ddd;
+  }
+  
   
   .image {
     max-height: 100px;
