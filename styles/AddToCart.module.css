@@ -1,5 +1,10 @@
 /* styles/AddToCart.module.css */
-
+.successMessage {
+    text-align: center;
+    margin-top: 10px;
+    text-emphasis-color: green;
+  }
+  
 .parts-list {
     list-style-type: none;
     padding: 0;

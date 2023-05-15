@@ -49,7 +49,7 @@ interface Build {
 const AddToCart = () => {
   const router = useRouter();
   const { build } = router.query;
-
+  const [showSuccess, setShowSuccess] = useState<boolean>(false);
   const initialBuild: Build | null = build ? JSON.parse(decodeURIComponent(build as string)) : null;
   const [suggestedBuild, setSuggestedBuild] = useState<Build | null>(initialBuild);
   console.log("initial build", initialBuild);
@@ -82,6 +82,8 @@ const AddToCart = () => {
     const updatedCart = [...existingCart, part];
     localStorage.setItem('cart', JSON.stringify(updatedCart));
     console.log(`${part.name} added to cart`);
+    setShowSuccess(true);
+    setTimeout(() => setShowSuccess(false), 3000); // This will hide the message after 3 seconds
   };
 
   const handleCustomize = (componentType: string) => {
@@ -150,8 +152,8 @@ const AddToCart = () => {
       </Head>
       <Navbar/>
       <div className={styles.container}>
-        <h1 className={styles.title}>{suggestedBuild ? `Details for ${suggestedBuild.title} computer` : 'Loading...'}</h1>
-        {suggestedBuild && (
+        {showSuccess && <div className={styles.successMessage}>Success! Added Item to Cart</div>}
+        <h1 className={styles.title}>{suggestedBuild ? `Details for ${suggestedBuild.title} computer` : 'Loading...'}</h1>        {suggestedBuild && (
           <>
             <h2 className={styles.componentsHeader}>Components</h2>
             <ul className={styles['partsList']}>
