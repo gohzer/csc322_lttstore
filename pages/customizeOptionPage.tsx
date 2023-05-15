@@ -346,8 +346,8 @@ const CustomizeOptionPage = () => {
         <title>Customize | MacroCenter</title>
       </Head>
       <Navbar />
-      <h1>
-        &nbsp;Welcome to the Macrocenter!&nbsp; Customize your {componentType}.
+      <h1 className={styles.title}>
+        Customize your {componentType}
       </h1>
 
       <div className={styles.container}>
@@ -358,7 +358,7 @@ const CustomizeOptionPage = () => {
               <div className={styles.component}>
                 <h2 className={styles.name}>{item.name}</h2>
                 <img src={item.image} alt={item.name} className={styles.image} />
-                <h3>${item.cost}</h3>
+                <h3 className={styles.price}>${item.cost}</h3>
               </div>
               <button className={styles.selectButton} onClick={() => onSelectComponent(item)}>
                 Select

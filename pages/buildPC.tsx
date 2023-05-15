@@ -88,7 +88,7 @@ export default function BuildPC() {
         <title>Build | MacroCenter</title>
       </Head>
       <Navbar />
-      <h1>Welcome to the Macrocenter! Build your PC here.</h1>
+      <h1 className={styles.title}>Welcome to the Macrocenter! Build your PC here.</h1>
       <div className={styles.container}>
         <h1>Please choose your component:</h1>
         <div className={styles.grid}>

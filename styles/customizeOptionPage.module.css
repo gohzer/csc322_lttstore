@@ -1,7 +1,8 @@
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
+    gap: 50px;
+    margin: 50px;
   }
   
   .gridItem {
@@ -21,16 +22,53 @@
   .name {
     text-align: center;
     margin-bottom: 10px;
+    font-size: 25px;
   }
   
   .image {
-    width: 100px; /* Adjust as necessary */
-    height: 100px; /* Adjust as necessary */
+    width: fit-content; /* Adjust as necessary */ 
+    height: 200px; /* Adjust as necessary */
     object-fit: cover;
   }
   
   .selectButton {
     margin-top: 10px;
-    /* other styles for the button */
+    padding: 8px 16px;
+    font-size: 0.9em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff;
+    transition: background-color 0.2s ease-in-out;
+    margin-left: 20px;
+    background-color: blueviolet;
   }
+
+
+  .title{
+    margin: 20Px;
+    font-size: 36px;
+    text-align: center;
+    text-transform: capitalize;
+  }
+
+  .container h1{
+    font-size: 24px;
+    margin-left: 10px;
+    margin-bottom: 20px;
+    text-transform: capitalize;
+}
   
+
+.container {
+  width: 80%;
+  padding: 0 15px;
+  margin: 0 auto;
+  
+}
+
+.price{
+    margin: 15Px;
+    font-size: 25px;
+    text-align: center;
+}

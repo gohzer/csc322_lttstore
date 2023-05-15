@@ -1,9 +1,10 @@
 /* Home.module.css */
 
 .container {
-    width: 100%;
+    width: 80%;
     padding: 0 15px;
     margin: 0 auto;
+    
   }
   
   .grid {
@@ -26,7 +27,7 @@
     justify-self: center;
     align-self: center;
     width: 60%;
-    background: #fff;
+    background: #E0DFF1;
     padding: 20px;
     display: flex;
     align-items: center;
@@ -35,8 +36,8 @@
   
   .customizeButton {
     border: none;
-    background: #007bff;
-    color: #fff;
+    background: #ffc107;
+    color: #000;
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
@@ -44,7 +45,8 @@
   }
   
   .customizeButton:hover {
-    background: #0056b3;
+    background: blueviolet;
+    color: #fff;
   }
   
   .image {
@@ -64,3 +66,15 @@
   .name {
     font-size: 1.5rem;
   }
+
+  .title {
+    margin: 20Px;
+    font-size: 36px;
+    text-align: center;
+}
+
+.container h1{
+    font-size: 24px;
+    margin-left: 10px;
+    margin-bottom: 20px;
+}
