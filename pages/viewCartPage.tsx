@@ -22,6 +22,7 @@ const Cart = () => {
   const [balance, setBalance] = useState(0);
   const [discount, setDiscount] = useState(false);
   const [goodUser, setGoodUser] = useState(false);
+  const [warns, setWarns] = useState(0);
   const router = useRouter();
   
   // Function to load the cart from localStorage
@@ -64,6 +65,7 @@ const Cart = () => {
     if(auth.currentUser) {
       let balance = parseFloat(localStorage.getItem('balance' + auth.currentUser.email) || '0');
       if(price > balance) {
+        setWarns(warns+1);
         alert("Insufficient funds! Get your bread up or remove some items.")
       }
       else {
@@ -115,7 +117,12 @@ const Cart = () => {
         setGoodUser(true);
       }
     })
-  }, [balance, reload]);
+    if (warns == 3) {
+      alert("You have reached 3 warnings! You are being kicked out of the site")
+      auth.signOut();
+      router.push("/")
+    }
+  }, [balance, reload, warns]);
 
   return (
     <>
