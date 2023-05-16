@@ -6,8 +6,11 @@ import { useEffect, useState } from "react";
 import Navbar from "./navbars";
 import Footer from "./footer";
 import styles from '@/styles/Employee.module.css';
-import { approveUserFirebase, getNonApprovedUsers } from "@/utils/database";
+import { approveUserFirebase, getNonApprovedUsers, queryCollection, addToDatabase } from "@/utils/database";
 import Link from 'next/link';
+
+
+/* */
 
 
 export default function EmployeeHub() {
@@ -20,6 +23,14 @@ export default function EmployeeHub() {
         async function approveUser() {
             await approveUserFirebase(props.email);
             window.location.reload();
+
+            //if approved add the customer to database
+            addToDatabase('customers', {
+                'email': props.email,
+                'complaint': 0,
+                'compliment': 0
+              })
+  
         }
 
         async function rejectUser(email: string) {

@@ -1,39 +1,82 @@
 // pages/StoreOwnerHub.tsx
+
+
+/* The store owner should be able to "VIEW" compliments and complaints for both the customer and employee
+
+    When they click the view buttons they will be taken to a page with the description of the compliment and/or complaint
+    there they will have the option to issue more compliments or compliments by counter or something
+
+    The view memo part will appear next to the customers and will take the owner to a page showing the memo written by the 
+    employee for the reason of their rejection. 
+
+
+*/
+import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import styles from '@/styles/storeOwner.module.css';
+import { getEmployeeComplaints, getUserComplaints, queryCollection, addToDatabase, approveUserFirebase, getNonApprovedUsers, getEmployeeSet } from '@/utils/database';
 
 interface User {
-  name: string;
+    email: string;
+    complaints?: number;
+    compliments?: number;
+    approved?: boolean;
+    isRejected?: boolean;
+  }
+
+interface Reject {
   email: string;
-  approved?: boolean;
+  notes: string;
 }
 
 const StoreOwnerHub = () => {
+    const router = useRouter();
+
   const [employees, setEmployees] = useState<User[]>([]);
   const [customers, setCustomers] = useState<User[]>([]);
+  const [rejects, setRejects] = useState<Reject[]>([]);
 
-  // need to fetch real users
   useEffect(() => {
-    setEmployees([
-      { name: 'Employee 1', email: 'ex', approved: true },
-      { name: 'Employee 2', email: 'ex', approved: true },
-    ]);
-    setCustomers([
-      { name: 'Customer 1', email: 'ex' },
-      { name: 'Customer 2', email: 'ex' },
-    ]);
+    const fetchUsers = async () => {
+      const eC = await getEmployeeComplaints('nabilomi1@gmail.com');
+      const fetchedEmployees = await queryCollection('employees');
+      const fetchedCustomers = await queryCollection('customers');
+      const fetchedRejects = await queryCollection('rejections');
+      const all = await getUserComplaints('nabilomi1@gmail.com');
+      console.log(all);
+      console.log("rejects", fetchedRejects);
+      console.log(eC);
+      console.log(fetchedEmployees);
+      setEmployees(fetchedEmployees);
+      setCustomers([
+        ...fetchedCustomers, 
+        ...fetchedRejects.map(reject => ({ ...reject, isRejected: true }))
+      ]);
+      setRejects(fetchedRejects);
+    };
+
+    fetchUsers();
   }, []);
 
   const handleCompliment = (user: User) => {
-    console.log(`Complimented ${user.name}`);
+    router.push({
+      pathname: '/complimentPage',
+      query: { email: user.email },
+    });
   };
 
   const handleComplaint = (user: User) => {
-    console.log(`Complained about ${user.name}`);
+    router.push({
+      pathname: '/complaintPage',
+      query: { email: user.email },
+    });
   };
 
   const handleMemo = (user: User) => {
-    console.log(`Memo for ${user.name}`);
+    router.push({
+      pathname: '/viewMemo',
+      query: { email: user.email },
+    });
   };
 
   const handleApprove = (user: User) => {
@@ -47,7 +90,6 @@ const StoreOwnerHub = () => {
     <table className={styles.table}>
       <thead>
         <tr>
-          <th>Name</th>
           <th>Email</th>
           <th>Actions</th>
         </tr>
@@ -55,39 +97,33 @@ const StoreOwnerHub = () => {
       <tbody>
         {employees.map((employee, index) => (
           <tr key={index}>
-            <td>{employee.name}</td>
             <td>{employee.email}</td>
             <td>
               <button
                 className={styles.button}
                 onClick={() => handleCompliment(employee)}
               >
-                Compliment
+                View Compliments
               </button>
               <button
                 className={styles.button}
                 onClick={() => handleComplaint(employee)}
               >
-                Complaint
+                View Complaints
               </button>
-              <button
-                className={styles.button}
-                onClick={() => handleMemo(employee)}
-              >
-                View Memo
-              </button>
+
+
             </td>
           </tr>
         ))}
       </tbody>
     </table>
   );
-
+  
   const renderCustomersTable = () => (
     <table className={styles.table}>
       <thead>
         <tr>
-          <th>Name</th>
           <th>Email</th>
           <th>Actions</th>
         </tr>
@@ -95,27 +131,26 @@ const StoreOwnerHub = () => {
       <tbody>
         {customers.map((customer, index) => (
           <tr key={index}>
-            <td>{customer.name}</td>
             <td>{customer.email}</td>
             <td>
               <button
                 className={styles.button}
                 onClick={() => handleCompliment(customer)}
               >
-                Compliment
+                View Compliments
               </button>
               <button
                 className={styles.button}
                 onClick={() => handleComplaint(customer)}
               >
-                Complaint
+                View Complaints
               </button>
-              {!customer.approved && (
+              {customer.isRejected && (
                 <button
                   className={styles.button}
-                  onClick={() => handleApprove(customer)}
+                  onClick={() => handleMemo(customer)}
                 >
-                  Approve
+                  View Memo
                 </button>
               )}
             </td>
@@ -124,17 +159,18 @@ const StoreOwnerHub = () => {
       </tbody>
     </table>
   );
+  
 
   return (
     <div className={styles.container}>
-      <h1
-        className={styles.title}>Store Owner Hub</h1>
-        <h2 className={styles.subtitle}>Employees</h2>
-        {renderEmployeesTable()}
-        <h2 className={styles.subtitle}>Customers</h2>
-        {renderCustomersTable()}
-        </div>
-        );
-        };
-
-        export default StoreOwnerHub;
+      <h1 className={styles.title}>Store Owner Hub</h1>
+      <h2 className={styles.subtitle}>Employees</h2>
+      {renderEmployeesTable()}
+      <h2 className={styles.subtitle}>Customers</h2>
+      {renderCustomersTable()}
+    </div>
+  );
+  
+  };
+  
+export default StoreOwnerHub;
