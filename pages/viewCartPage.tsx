@@ -28,7 +28,7 @@ const Cart = () => {
     setCart(savedCart);
     let prices = 0;
     for(let item in cart) {
-      prices += cart[item].cost
+      prices += parseFloat(cart[item].cost.toString())
       setPrice(prices);
     }
     setReload(true);
@@ -36,7 +36,7 @@ const Cart = () => {
 
   // Function to handle removing an item from the cart
   const handleRemoveItem = (index: number) => {
-    let itemPrice = cart[index].cost;
+    let itemPrice = parseFloat(cart[index].cost.toString());
     setPrice(price - itemPrice);
     const newCart = [...cart];
     newCart.splice(index, 1);
