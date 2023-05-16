@@ -64,13 +64,12 @@ const ReviewsPage = () => {
     e.preventDefault();
     const computerPartId = id;
     const { username, rating, comment } = newReview;
-    //await addReview({ computerPartId, username, rating, comment });
     setNewReview({
-      id: 0,
-      computerPartId: 0,
-      username: '',
-      rating: 0,
-      comment: '',
+      id: id,
+      computerPartId: computerPartId,
+      username: username,
+      rating: rating,
+      comment: comment,
     });
   };
 
@@ -104,13 +103,15 @@ const ReviewsPage = () => {
                   <br />
                   <label htmlFor={`comment-${part.id}`}>Comment:</label>
                   <br />
-                  
                   <textarea
                     id={`comment-${part.id}`}
                     rows={5}
-                    cols={50}
-                    onChange={(e) => handleCommentChange(e, part.id)}
-                    value={newReview.comment}
+                    cols={38}
+                    onChange={(e) => {
+                      const index = computerParts.findIndex((p) => p.id === part.id);
+                      handleCommentChange(e, index);
+                    }}
+                    value={reviews.find((review) => review.computerPartId === part.id)?.comment || ''}
                   />
                   <br />
                   <button type="submit">Add Review</button>
