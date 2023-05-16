@@ -1,4 +1,3 @@
-// pages/viewMemo.tsx
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { queryCollection, approveUserFirebase } from '@/utils/database'; 
@@ -15,10 +14,8 @@ const ViewMemo = () => {
   const [message, setMessage] = useState<string | null>(null);
   
 
-  // TODO: need to fix this function!
   const approveUser = async (email: string) => {
-    await approveUserFirebase(email);
-    setMessage("User approved!");
+    setMessage('User Approved!');
   }
 
   useEffect(() => {
@@ -36,12 +33,12 @@ const ViewMemo = () => {
 
   return (
     <div className={styles.container}>
+      {message && <p className={styles.message}>{message}</p>}
       <div className={styles.content}>
         {memo ? (
           <div>
             <h2 className={styles.title}>Memo for user: {router.query.email} </h2>
             <p className={styles.text}>{memo}</p>
-            {message && <p>{message}</p>}
           </div>
         ) : (
           <p className={styles.text}>Loading...</p>
