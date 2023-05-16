@@ -100,9 +100,12 @@ export default function EmployeeHub() {
         <Navbar />    
         
         <h2 className={styles.title}>Employee Hub</h2>
-        <div className={styles.container}>
+        
+        <h2 className={styles.h2} >Users to Approve</h2>
+        <div className={styles.grid}>
+        
+            <div className={styles.container}>
             
-            <h2>Users to Approve</h2>
             <table className={styles.table}>
             <thead>
                 <tr>
@@ -116,8 +119,18 @@ export default function EmployeeHub() {
                 ))}
             </tbody>
             </table>
+            </div>
+
+            <div className={styles.contact}>
+                <h1 className={styles.header}>Contact Customers</h1>
+                    <button className={styles.supportbtn}>
+                    <a href='https://www.gmail.com'>Email</a>
+                </button>
+            </div>
             
         </div>
+
+       
         <Footer />
         </>
         

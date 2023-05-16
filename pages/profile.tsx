@@ -84,7 +84,7 @@ export function ProfileItem(details: ProfileDetails) {
     return (<div className={styles.profileitem}>
         <p>{details.email}</p>
         <p>Account Type: {details.account_type}</p>
-        <p>Approval Status: {details.approval ? "Apporved" : "Not Apporved"}</p>
+        <p>Approval Status: {details.approval ? "Approved" : "Not Approved"}</p>
         <p>Balance: {details.balance}</p>
     </div>)
 }
