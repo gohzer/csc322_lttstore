@@ -40,6 +40,7 @@ function makePartFromObject(obj: any) {
 
 export default function Home() {
   const [builds, setBuilds] = useState<suggestedBuild[]>([]);
+  const [authed, setAuthed] = useState(false);
   async function getPCs() {
     await getAllComputers().then(async res => {
       for (let idx in res) {
@@ -93,6 +94,9 @@ export default function Home() {
 
   useEffect(() => {
     getPCs();         
+    auth.onAuthStateChanged(() => {
+      if(auth.currentUser) setAuthed(true);
+    })
   }, []);
   return (
     <>
@@ -105,8 +109,9 @@ export default function Home() {
         <Navbar />
         <div className={styles.startbuilddiv}>
           <h1 className={styles.buildMachinep}>Build Your Own Machine</h1>
+          
           <button className={styles.startbuildbtn}>
-            <a href='/buildPC'>Start Build</a>
+            {authed ? <a href='/buildPC'>Start Build</a> : <a href='/signup'>Sign Up</a>}
           </button>
 
         </div>
