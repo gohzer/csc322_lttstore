@@ -42,6 +42,7 @@ export default function Profile() {
     function signOut() {
         auth.signOut()
         .then(() => {
+            localStorage.clear()
             router.push("/");
         })
         .catch(e => console.error(e));
