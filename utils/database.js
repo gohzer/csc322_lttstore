@@ -24,7 +24,7 @@ export async function getEmployeeSet() {
     let ret = await queryCollection("employees/");
     let emailSet = new Set();
     ret.forEach(item => {
-        emailSet.add(item.employee_email);
+        emailSet.add(item.email);
     });
     return emailSet;
 }
@@ -38,7 +38,7 @@ export async function getNonApprovedUserSet() {
     let ret = await queryCollection("pendingApproval/")
     let emailSet = new Set();
     ret.forEach(item => {
-        emailSet.add(item.employee_email);
+        emailSet.add(item.email);
     });
     return emailSet;
 }
@@ -102,4 +102,22 @@ export async function getPurchases(uid) {
         ret.push(doc.data());
     });
     return ret;
+}
+
+export async function getEmployees() {
+    return await queryCollection("employees/");
+}
+
+export async function addComplaint(email, from_email) {
+    await getEmployeeSet().then(async s => {
+        let collec = collection(database, 'employees', email, 'complaints');
+        await addDoc(collec, {'email': from_email})
+    })
+}
+
+export async function addCompliment(email, from_email) {
+    await getEmployeeSet().then(async s => {
+        let collec = collection(database, 'employees', email, 'compliments');
+        await addDoc(collec, {'email': from_email})
+    })
 }
