@@ -21,6 +21,7 @@ const Cart = () => {
   const [reload, setReload] = useState(false);
   const [balance, setBalance] = useState(0);
   const [discount, setDiscount] = useState(false);
+  const [goodUser, setGoodUser] = useState(false);
   const router = useRouter();
   
   // Function to load the cart from localStorage
@@ -31,6 +32,7 @@ const Cart = () => {
     if(auth.currentUser) await getPurchases(auth.currentUser.uid).then(purchs => {
       let mult = purchs.length == 0 ? 0.8 : 1;
       if(mult != 1) setDiscount(true);
+      if(goodUser) mult *= .9;
       let prices = 0;
       for(let item in cart) {
         prices += (parseFloat(cart[item].cost.toString()) * mult)
@@ -70,7 +72,8 @@ const Cart = () => {
               for(let i in cart) {
                 let item = cart[i];
                 let mult = 1
-                if(discount) mult = 0.8
+                if(discount) mult *= 0.8
+                if(goodUser) mult *= 0.9
                 if(auth.currentUser) addToPurchased(auth.currentUser.uid, item.name, item.type, item.cost * mult);
               }
               handleClearCart();
@@ -107,6 +110,10 @@ const Cart = () => {
         let bal = parseFloat(localStorage.getItem('balance' + auth.currentUser.email) || '0');
         setBalance(bal);
       }
+      let item = localStorage.getItem('discount' + auth.currentUser?.email);
+      if(item) {
+        setGoodUser(true);
+      }
     })
   }, [balance, reload]);
 
@@ -121,6 +128,7 @@ const Cart = () => {
         <h1 className={styles.title}>
           Shopping Cart
           {discount && <p>SPECIAL ONE-TIME OFFER! 20% off!</p>}
+          {goodUser && <p>10% good user discount has been applied to your order.</p>}
           </h1>
 
         <div className={styles.cartlistcontainer}>

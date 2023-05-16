@@ -7,7 +7,7 @@ import Navbar from './navbars';
 import { ComputerCard, Computers } from './computerCards';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase/config"
-import { addUserCompliment, addUserComplaint, getAllComputerParts, getAllComputers, getPartById, getUserComplaints } from "../utils/database"
+import { addUserCompliment, addUserComplaint, getAllComputerParts, getAllComputers, getPartById, getUserComplaints, getUserCompliments } from "../utils/database"
 import { useEffect, useState } from 'react';
 
 type Part = {
@@ -41,6 +41,8 @@ function makePartFromObject(obj: any) {
 export default function Home() {
   const [builds, setBuilds] = useState<suggestedBuild[]>([]);
   const [authed, setAuthed] = useState(false);
+  const [warning, setWarning] = useState(false);
+  const [compliment, setCompliments] = useState(false);
   async function getPCs() {
     await getAllComputers().then(async res => {
       for (let idx in res) {
@@ -94,8 +96,22 @@ export default function Home() {
 
   useEffect(() => {
     getPCs();         
-    auth.onAuthStateChanged(() => {
-      if(auth.currentUser) setAuthed(true);
+    auth.onAuthStateChanged(async () => {
+      if(auth.currentUser) {
+        setAuthed(true);
+        await getUserComplaints(auth.currentUser.email).then(n => {
+          if(n.length > 3) {
+            setWarning(true);
+          }
+        })
+
+        await getUserCompliments(auth.currentUser.email).then(n => {
+          if(n.length > 3) {
+            setCompliments(true);
+            localStorage.setItem('discount' + auth.currentUser?.email, '.9')
+          }
+        })
+      }
     })
   }, []);
   return (
@@ -113,6 +129,9 @@ export default function Home() {
           <button className={styles.startbuildbtn}>
             {authed ? <a href='/buildPC'>Start Build</a> : <a href='/signup'>Sign Up</a>}
           </button>
+
+          {warning && <h1>You are warned for excessive complaints.</h1>}
+          {compliment && <h1>For being a good user, you have been provided with a 10% discount to your orders.</h1>}
 
         </div>
 
