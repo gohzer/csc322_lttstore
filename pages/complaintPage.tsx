@@ -1,7 +1,7 @@
-// will show complaints associated with a user to the store owner. 
+// pages/ComplaintPage.tsx
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { getUserComplaints } from '@/utils/database';
+import { getUserComplaints, addUserComplaint } from '@/utils/database';
 import styles from '@/styles/complaintPage.module.css';
 
 interface Complaint {
@@ -21,8 +21,25 @@ const ComplaintPage = () => {
     }
   }, [router.query.email]);
 
+  async function handleIssueComplaint() {
+    console.log('Issue complaint button clicked');
+    // Implement your functionality here
+    let email = router.query.email;
+    addUserComplaint(email, 'by owner so just count', "by store owner");
+    console.log(email);
+
+    let n = getUserComplaints(email);
+    console.log(n)
+    if((await n).length > 3 ) {
+        // do something to notify the customer
+    }
+
+
+  };
+
   return (
     <div className={styles.container}>
+      <button onClick={handleIssueComplaint}>Issue Complaint</button>
       <table className={styles.table}>
         <thead>
           <tr>

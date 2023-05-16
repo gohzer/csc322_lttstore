@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import Navbar from "./navbars";
 import Footer from "./footer";
 import styles from '@/styles/Employee.module.css';
-import { approveUserFirebase, getNonApprovedUsers, queryCollection, addToDatabase } from "@/utils/database";
+import { approveUserFirebase, getNonApprovedUsers, queryCollection, addToDatabase, addUserComplaint, addEmployeeCompliment, getUserCompliments, getUserComplaints } from "@/utils/database";
 import Link from 'next/link';
 
 
@@ -41,19 +41,48 @@ export default function EmployeeHub() {
                 query: {email: email}
             });
           }
-        return (
+
+
+          function handleIssueCompliment(email: string) {
+            console.log(`Issue compliment for user: ${email}`);
+            // Implement your functionality here
+            router.push(`/issueComplimentPage?email=${email}`);
+
+          }
+        
+          function handleIssueComplaint(email: string) {
+
+            //addUserComplaint('asd@gmail.com', 'nabilomi1@gmail.com', 'he killed my family')
+           // let test = getUserComplaints('asd@gmail.com');
+            //console.log(test);
+
+            console.log(`Issue complaint for user: ${email}`);
+            // Implement your functionality here
+
+            router.push(`/issueComplaintPage?email=${email}`);
+          }
+          return (
             <>
-            <tr>
+              <tr>
                 <td>{props.email}</td>
                 <td>
-                <button className={styles.button} onClick={approveUser}>Approve</button>
-                <button className={styles.button} onClick={() => rejectUser(props.email)}>Reject</button>
+                  <button className={styles.button} onClick={approveUser}>
+                    Approve
+                  </button>
+                  <button className={styles.button} onClick={() => rejectUser(props.email)}>
+                    Reject
+                  </button>
+                  <button className={styles.button} onClick={() => handleIssueCompliment(props.email)}>
+                    Issue Compliment
+                  </button>
+                  <button className={styles.button} onClick={() => handleIssueComplaint(props.email)}>
+                    Issue Complaint
+                  </button>
                 </td>
-            </tr>
+              </tr>
             </>
-        )
-    }
-
+          );
+        }
     async function getUsers() {
         let users = await getNonApprovedUsers();
         setUserList(users);
