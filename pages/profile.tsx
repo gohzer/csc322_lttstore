@@ -13,15 +13,15 @@ export default function Profile() {
         );
 
     useEffect(() => {
-        auth.onAuthStateChanged(() => {
+        auth.onAuthStateChanged(async () => {
             if(auth.currentUser) {
                 var email = auth.currentUser.email || "NOT_LOGGED_IN";
                 var verfied = false; //placeholder
                 var account_type = "user"; //placeholder
 
-                var bal_local = localStorage.getItem('balance');
-                if(bal_local === null) localStorage.setItem('balance', '0');
-                var balance = parseFloat(localStorage.getItem('balance') || '0');
+                var bal_local = localStorage.getItem('balance' + auth.currentUser.email);
+                if(bal_local === null) localStorage.setItem('balance' + auth.currentUser.email, '0');
+                var balance = parseFloat(localStorage.getItem('balance' + auth.currentUser.email) || '0');
 
                 setBalance(balance);
                 var details = new ProfileDetails(email, account_type, verfied, balance);
@@ -41,8 +41,11 @@ export default function Profile() {
     }
 
     const addbal = () => {
-        setBalance(balance + 100);
-        localStorage.setItem('balance', `${balance + 100}`);
+        if(auth.currentUser) {
+            setBalance(balance + 100);
+            localStorage.setItem('balance' + auth.currentUser.email, `${balance + 100}`);
+        }
+        
     }
 
 

@@ -53,28 +53,33 @@ const Cart = () => {
   // Function to proceed to checkout
   const handleCheckout = async () => {
     // Navigate to the checkout page (replace 'checkout' with the path of your checkout page)
-    let balance = parseFloat(localStorage.getItem('balance') || '0');
-    if(price > balance) {
-      alert("Insufficient funds! Get your bread up or remove some items.")
-    }
-    else {
-      await getNonApprovedUserSet().then(nonApproved => {
-        if(auth.currentUser && !nonApproved.has(auth.currentUser.email)) {
-          for(let i in cart) {
-            let item = cart[i];
-            addToPurchased(auth.currentUser.uid, item.name, item.type, item.cost);
+    if(auth.currentUser) {
+      let balance = parseFloat(localStorage.getItem('balance' + auth.currentUser.email) || '0');
+      if(price > balance) {
+        alert("Insufficient funds! Get your bread up or remove some items.")
+      }
+      else {
+        await getNonApprovedUserSet().then(nonApproved => {
+          if(auth.currentUser && !nonApproved.has(auth.currentUser.email)) {
+            for(let i in cart) {
+              let item = cart[i];
+              addToPurchased(auth.currentUser.uid, item.name, item.type, item.cost);
+            }
+            handleClearCart();
+            let newBal = (balance - price)
+            localStorage.setItem('balance' + auth.currentUser.email, newBal.toString())
+            setBalance(newBal);
+            setPrice(0);
+            alert("Items purchased! The cost has been debited from your account.")
           }
-          handleClearCart();
-          let newBal = (balance - price)
-          localStorage.setItem('balance', newBal.toString())
-          setBalance(newBal);
-          setPrice(0);
-          alert("Items purchased! The cost has been debited from your account.")
-        }
-        else alert("you are not approved! cannot purchase items")
-      });
-      
+          else alert("you are not approved! cannot purchase items")
+        });
+        
+      }
+    } else {
+      alert("you are not approved! cannot purchase items")
     }
+    
   };
 
   function handlePurchaseHistory() {
@@ -84,9 +89,13 @@ const Cart = () => {
   // Load cart from localStorage when component mounts
   useEffect(() => {
     loadCart();
-    let bal = parseFloat(localStorage.getItem('balance') || '0');
-    setBalance(bal);
-  }, [reload]);
+    auth.onAuthStateChanged(() => {
+      if(auth.currentUser) {
+        let bal = parseFloat(localStorage.getItem('balance' + auth.currentUser.email) || '0');
+        setBalance(bal);
+      }
+    })
+  }, [balance]);
 
   return (
     <>
