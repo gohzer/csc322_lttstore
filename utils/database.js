@@ -1,7 +1,7 @@
 import { auth, database } from "../firebase/config.js"
 import { collection, deleteDoc, doc, setDoc, getDoc, getDocs, addDoc } from "firebase/firestore";
 
-async function queryCollection(path) {
+export async function queryCollection(path) {
     let partsCollection = collection(database, path);
     let parts = await getDocs(partsCollection);
     let ret = [];

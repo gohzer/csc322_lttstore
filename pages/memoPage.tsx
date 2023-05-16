@@ -1,7 +1,11 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import styles from '@/styles/memoPage.module.css';
-import { addToDatabase, approveUserFirebase } from '@/utils/database';
+import { queryCollection, addToDatabase, approveUserFirebase,  } from '@/utils/database';
+
+// Will take the rejection memo and store it in email. this memo will be viewable by the store owner
+
+
 
 const MemoPage = () => {
   const [memo, setMemo] = useState('');
@@ -11,6 +15,7 @@ const MemoPage = () => {
   const handleMemoChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMemo(event.target.value);
   };
+
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -23,6 +28,8 @@ const MemoPage = () => {
       // Implement logic to save the memo
       router.push('/employee');
     })
+
+
     
   };
 
