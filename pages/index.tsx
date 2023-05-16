@@ -7,7 +7,7 @@ import Navbar from './navbars';
 import { ComputerCard, Computers } from './computerCards';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase/config"
-import { addComplaint, addCompliment, getAllComputerParts, getAllComputers, getPartById } from "../utils/database"
+import { addUserCompliment, addUserComplaint, getAllComputerParts, getAllComputers, getPartById, getUserComplaints } from "../utils/database"
 import { useEffect, useState } from 'react';
 
 type Part = {
@@ -92,7 +92,7 @@ export default function Home() {
   }
 
   useEffect(() => {
-    getPCs();                     
+    getPCs();         
   }, []);
   return (
     <>

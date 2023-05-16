@@ -108,22 +108,76 @@ export async function getEmployees() {
     return await queryCollection("employees/");
 }
 
-export async function addComplaint(email, from_email) {
+export async function addEmployeeComplaint(email, from_email, memo) {
     await getEmployeeSet().then(async s => {
         let collec = collection(database, 'employees', email, 'complaints');
-        await addDoc(collec, {'email': from_email})
+        await addDoc(collec, {'email': from_email, 'memo': memo})
     })
 }
 
-export async function addCompliment(email, from_email) {
+export async function addEmployeeCompliment(email, from_email, memo) {
     await getEmployeeSet().then(async s => {
         let collec = collection(database, 'employees', email, 'compliments');
-        await addDoc(collec, {'email': from_email})
+        await addDoc(collec, {'email': from_email, 'memo': memo})
     })
+}
+
+export async function getEmployeeComplaints(email) {
+    let collec = collection(database, 'employees', email, 'complaints');
+    let parts = await getDocs(collec);
+    let ret = [];
+    parts.forEach((doc) => {
+        ret.push(doc.data());
+    });
+    return ret;
+}
+
+export async function getEmployeeCompliments(email) {
+    let collec = collection(database, 'employees', email, 'compliments');
+    let parts = await getDocs(collec);
+    let ret = [];
+    parts.forEach((doc) => {
+        ret.push(doc.data());
+    });
+    return ret;
 }
 
 
 export async function addToDatabase(collect, doc) {
     let collec = collection(database, collect);
     await addDoc(collec, doc)
+}
+
+export async function addUserComplaint(email, from_email, memo) {
+    await getEmployeeSet().then(async s => {
+        let collec = collection(database, 'users', email, 'complaints');
+        await addDoc(collec, {'email': from_email, 'memo': memo})
+    })
+}
+
+export async function addUserCompliment(email, from_email, memo) {
+    await getEmployeeSet().then(async s => {
+        let collec = collection(database, 'users', email, 'compliments');
+        await addDoc(collec, {'email': from_email, 'memo': memo})
+    })
+}
+
+export async function getUserComplaints(email) {
+    let collec = collection(database, 'users', email, 'complaints');
+    let parts = await getDocs(collec);
+    let ret = [];
+    parts.forEach((doc) => {
+        ret.push(doc.data());
+    });
+    return ret;
+}
+
+export async function getUserCompliments(email) {
+    let collec = collection(database, 'users', email, 'compliments');
+    let parts = await getDocs(collec);
+    let ret = [];
+    parts.forEach((doc) => {
+        ret.push(doc.data());
+    });
+    return ret;
 }
