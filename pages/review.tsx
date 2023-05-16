@@ -34,6 +34,9 @@ const ReviewsPage = () => {
     comment: '',
   });
 
+  const [comments, setComments] = useState<{ [key: number]: string }>({});
+
+
   useEffect(() => {
     const fetchData = async () => {
       const parts = await getAllComputerParts();
@@ -49,7 +52,8 @@ const ReviewsPage = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
+// in useEffect
+useEffect(() => {
   const storedReviews = localStorage.getItem('reviews');
   if (storedReviews) {
     setReviews(JSON.parse(storedReviews));
@@ -60,35 +64,32 @@ const handleRatingChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
   const newRating = parseInt(e.target.value);
   setNewReview((prevReview) => ({ ...prevReview, rating: newRating }));
 };
-
-const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>, index: number) => {
+const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>, partId: number) => {
   const newComment = e.target.value;
-  setReviews((prevReviews) =>
-    prevReviews.map((review, i) => (i === index ? { ...review, comment: newComment } : review))
-  );
+  setComments((prevComments) => ({ ...prevComments, [partId]: newComment }));
 };
 
-
-const handleSubmit = (e: React.FormEvent<HTMLFormElement>, id: number) => {
+const handleSubmit = (e: React.FormEvent<HTMLFormElement>, part: ComputerPart) => {
   e.preventDefault();
-  const computerPartId = id;
 
+  
   const newReviewData: Review = {
     id: Date.now(), // Use a unique timestamp as the review ID
-    computerPartId,
+    computerPartId: part.id,
     username: newReview.username,
     rating: newReview.rating,
-    comment: newReview.comment,
+    comment: comments[part.id] || '', // get comment from comments state
   };
 
-  // Save the review to localStorage as a separate item
-  const storedReview = localStorage.getItem(`review-${newReviewData.id}`);
-  if (!storedReview) {
-    localStorage.setItem(`review-${newReviewData.id}`, JSON.stringify(newReviewData));
-  }
+  console.log("review",newReviewData.comment); // This will log the comment text
 
+
+  // Save the review to local storage using the computer part name as a key
+  localStorage.setItem(`${part.name}`, JSON.stringify(newReviewData));
+
+  console.log(localStorage.getItem(`${part.name}`));
   // Update the reviews state with the new review
-  setReviews([...reviews, newReviewData]);
+  setReviews((prevReviews) => [...prevReviews, newReviewData]);
 
   // Clear the new review data
   setNewReview({
@@ -100,9 +101,11 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>, id: number) => {
   });
 };
 
+
   const router = useRouter();
-  const handleViewReviews = (productId: number) => {
-    router.push(`/ViewReviewsPage/${productId}`);
+  const handleViewReviews = (name: string) => {
+    console.log(name);
+    router.push(`/ViewReviewsPage/?id=${name}`);
   };
 
   return (
@@ -123,7 +126,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>, id: number) => {
               <p>{part.description}</p>
               <p>Price: ${part.price}</p>
               <img src={part.image} alt={part.name} className={styles.image} />
-                <form onSubmit={(e) => handleSubmit(e, part.id)}>
+                <form onSubmit={(e) => handleSubmit(e, part)}>
                   <label htmlFor={`rating-${part.id}`}>Rating:</label>
                   <select id={`rating-${part.id}`} onChange={handleRatingChange}>
                     <option value="1">1</option>
@@ -135,20 +138,17 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>, id: number) => {
                   <br />
                   <label htmlFor={`comment-${part.id}`}>Comment:</label>
                   <br />
-                  <textarea
-                    id={`comment-${part.id}`}
-                    rows={5}
-                    cols={38}
-                    onChange={(e) => {
-                      const index = computerParts.findIndex((p) => p.id === part.id);
-                      handleCommentChange(e, index);
-                    }}
-                    value={reviews.find((review) => review.computerPartId === part.id)?.comment || ''}
-                  />
+                    <textarea
+        id={`comment-${part.id}`}
+        rows={5}
+        cols={38}
+        onChange={(e) => handleCommentChange(e, part.id)}
+        value={comments[part.id] || ''}
+      />
                   <br />
                   <button type="submit">Add Review</button>
 
-                  <button type = "button" onClick={() => handleViewReviews(part.id)}>View Reviews
+                  <button type = "button" onClick={() => handleViewReviews(part.name)}>View Reviews
                   </button>
                 </form>
               </div>
