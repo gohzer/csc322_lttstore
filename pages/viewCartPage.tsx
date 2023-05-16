@@ -59,7 +59,7 @@ const Cart = () => {
     }
     else {
       await getNonApprovedUserSet().then(nonApproved => {
-        if(auth.currentUser && nonApproved.has(auth.currentUser.email)) {
+        if(auth.currentUser && !nonApproved.has(auth.currentUser.email)) {
           for(let i in cart) {
             let item = cart[i];
             addToPurchased(auth.currentUser.uid, item.name, item.type, item.cost);
