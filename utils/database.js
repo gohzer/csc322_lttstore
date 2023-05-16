@@ -123,7 +123,7 @@ export async function addCompliment(email, from_email) {
 }
 
 
-export async function addToDatabase(collection, doc) {
-    let collec = collection(database, collection);
+export async function addToDatabase(collect, doc) {
+    let collec = collection(database, collect);
     await addDoc(collec, doc)
 }

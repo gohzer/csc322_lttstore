@@ -21,13 +21,22 @@ export default function EmployeeHub() {
             await approveUserFirebase(props.email);
             window.location.reload();
         }
+
+        async function rejectUser(email: string) {
+            // Implement the logic for rejecting the user
+            //window.location.reload();
+            router.push({
+                pathname: '/memoPage',
+                query: {email: email}
+            });
+          }
         return (
             <>
             <tr>
                 <td>{props.email}</td>
                 <td>
                 <button className={styles.button} onClick={approveUser}>Approve</button>
-                <button className={styles.button} onClick={rejectUser}>Reject</button>
+                <button className={styles.button} onClick={() => rejectUser(props.email)}>Reject</button>
                 </td>
             </tr>
             </>
@@ -40,13 +49,7 @@ export default function EmployeeHub() {
         setReload(true);
     }
 
-    async function rejectUser() {
-        // Implement the logic for rejecting the user
-        //window.location.reload();
-        router.push(`/memoPage`);
-
-        
-      }
+    
     useEffect(() => {
         getUsers(); 
     }, [reload])
