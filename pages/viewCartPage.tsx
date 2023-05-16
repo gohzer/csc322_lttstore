@@ -5,7 +5,7 @@ import Navbar from './navbars';
 import Head from 'next/head';
 import Footer from './footer';
 import { useRouter } from 'next/router';
-import { addToPurchased, getNonApprovedUserSet, getNonApprovedUsers } from '@/utils/database';
+import { addToPurchased, getNonApprovedUserSet, getNonApprovedUsers, getPurchases } from '@/utils/database';
 import { auth } from "../firebase/config"
 
 interface Part {
@@ -20,18 +20,24 @@ const Cart = () => {
   const [price, setPrice] = useState<number>(0);
   const [reload, setReload] = useState(false);
   const [balance, setBalance] = useState(0);
+  const [discount, setDiscount] = useState(false);
   const router = useRouter();
   
   // Function to load the cart from localStorage
-  const loadCart = () => {
+  const loadCart = async () => {
     const savedCart = JSON.parse(localStorage.getItem('cart') ?? '[]');
     setCart(savedCart);
-    let prices = 0;
-    for(let item in cart) {
-      prices += parseFloat(cart[item].cost.toString())
-      setPrice(prices);
-    }
-    setReload(true);
+
+    if(auth.currentUser) await getPurchases(auth.currentUser.uid).then(purchs => {
+      let mult = purchs.length == 0 ? 0.8 : 1;
+      if(mult != 1) setDiscount(true);
+      let prices = 0;
+      for(let item in cart) {
+        prices += (parseFloat(cart[item].cost.toString()) * mult)
+        setPrice(prices);
+      }
+      setReload(true);
+    })
   };
 
   // Function to handle removing an item from the cart
@@ -59,18 +65,21 @@ const Cart = () => {
         alert("Insufficient funds! Get your bread up or remove some items.")
       }
       else {
-        await getNonApprovedUserSet().then(nonApproved => {
+        await getNonApprovedUserSet().then(async nonApproved => {
           if(auth.currentUser && !nonApproved.has(auth.currentUser.email)) {
-            for(let i in cart) {
-              let item = cart[i];
-              addToPurchased(auth.currentUser.uid, item.name, item.type, item.cost);
-            }
-            handleClearCart();
-            let newBal = (balance - price)
-            localStorage.setItem('balance' + auth.currentUser.email, newBal.toString())
-            setBalance(newBal);
-            setPrice(0);
-            alert("Items purchased! The cost has been debited from your account.")
+              for(let i in cart) {
+                let item = cart[i];
+                let mult = 1
+                if(discount) mult = 0.8
+                if(auth.currentUser) addToPurchased(auth.currentUser.uid, item.name, item.type, item.cost * mult);
+              }
+              handleClearCart();
+              let newBal = (balance - (price))
+              if(auth.currentUser)
+                localStorage.setItem('balance' + auth.currentUser.email, newBal.toString())
+              setBalance(newBal);
+              setPrice(0);
+              alert("Items purchased! The cost has been debited from your account.")
           }
           else alert("you are not approved! cannot purchase items")
         });
@@ -88,14 +97,18 @@ const Cart = () => {
 
   // Load cart from localStorage when component mounts
   useEffect(() => {
-    loadCart();
     auth.onAuthStateChanged(() => {
+      loadCart();
       if(auth.currentUser) {
+        if(!localStorage.getItem('balance' + auth.currentUser.email)) {
+          console.log("set")
+          localStorage.setItem('balance' + auth.currentUser.email, '0')
+        }
         let bal = parseFloat(localStorage.getItem('balance' + auth.currentUser.email) || '0');
         setBalance(bal);
       }
     })
-  }, [balance]);
+  }, [balance, reload]);
 
   return (
     <>
@@ -105,7 +118,11 @@ const Cart = () => {
       <Navbar/>
       
       <div className={styles.container}>
-        <h1 className={styles.title}>Shopping Cart</h1>
+        <h1 className={styles.title}>
+          Shopping Cart
+          {discount && <p>SPECIAL ONE-TIME OFFER! 20% off!</p>}
+          </h1>
+
         <div className={styles.cartlistcontainer}>
         <ul className={styles.cartList}>
           {cart.map((item, index) => (

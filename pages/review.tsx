@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getAllComputerParts} from '@/utils/database';
-import styles from '@/styles/ReviewsPage.module.css';
+import styles from '@/styles/reviewsPage.module.css';
 import Footer from './footer'
 import Head from 'next/head';
 import Navbar from './navbars';
