@@ -121,3 +121,9 @@ export async function addCompliment(email, from_email) {
         await addDoc(collec, {'email': from_email})
     })
 }
+
+
+export async function addToDatabase(collection, doc) {
+    let collec = collection(database, collection);
+    await addDoc(collec, doc)
+}
